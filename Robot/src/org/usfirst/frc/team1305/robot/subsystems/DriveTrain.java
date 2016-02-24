@@ -132,5 +132,12 @@ public class DriveTrain extends Subsystem {
     	ml1.set(0.25);
     	ml2.set(0.25);
     }
+    public void stopDriving(){
+    	ml1.set(0);
+    	ml2.set(0);
+    	mr1.set(0);
+    	mr2.set(0);
+    }
+    
 }
 

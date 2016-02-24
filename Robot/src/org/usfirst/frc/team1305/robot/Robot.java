@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1305.robot.commands.AutonomousCommandGroup;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.commands.AutonomousTurnLeft;
 import org.usfirst.frc.team1305.robot.commands.AutonomousTurnRight;
@@ -62,7 +63,7 @@ public class Robot extends IterativeRobot {
 		if (driveController.getRawButton(X_BUTTON) && autoMode != 1){
 			autoMode = 1;
 			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousTurnLeft();
+			trialAutonomousCommand = new AutonomousCommandGroup();
 			
 		}
 		else if (driveController.getRawButton(Y_BUTTON) && autoMode != 2){
@@ -103,7 +104,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	System.out.println("autonomousPeriodic");
         Scheduler.getInstance().run();
+        
+        trialAutonomousCommand.start();
     }
 
     public void teleopInit() {

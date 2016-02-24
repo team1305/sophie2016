@@ -48,7 +48,4 @@ public class AutonomousTurnRight extends Command {
     protected void interrupted() {
     }
 
-	public static void toggleSmoothing() {
-
-	}
 }
