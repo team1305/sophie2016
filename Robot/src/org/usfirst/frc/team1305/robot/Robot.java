@@ -1,11 +1,11 @@
 
 package org.usfirst.frc.team1305.robot;
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
@@ -23,6 +23,11 @@ import org.usfirst.frc.team1305.robot.subsystems.Camera;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
+	Joystick driveController;
+	public static final int X_BUTTON = 3;
+	public static final int Y_BUTTON = 4;
+	int autoMode = -1;
+	Command trialAutonomousCommand;
 	
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Launcher launcher = new Launcher();
@@ -39,7 +44,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new AutonomousStub();
-
+        driveController = oi.getDriveContoller();
        
         	
         
@@ -47,6 +52,28 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		if (driveController.getRawButton(X_BUTTON) && autoMode == 1){
+			autoMode = 1;
+			Scheduler.getInstance().removeAll();
+			trialAutonomousCommand = new AutonomousStub();
+			
+		}
+		else if (driveController.getRawButton(Y_BUTTON) && autoMode == -1){
+			autoMode = -1;
+			Scheduler.getInstance().removeAll();
+			//trialAutonomousCommand = new AutonomousStub();
+			
+		}
+		switch(autoMode){
+		case -1:
+			SmartDashboard.putString("Auto", "none");
+			break;
+			
+		case 1:
+			SmartDashboard.putString("Auto", "autonomousStub");
+			break;
+		
+		}
 	}
 
     public void autonomousInit() {

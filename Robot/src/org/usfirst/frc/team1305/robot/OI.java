@@ -67,7 +67,7 @@ public class OI {
 	
 
 	
-	private final Button toggleLauncherLockin = new JoystickButton(ballController, 4);
+	private final Button toggleLauncherLockin = new JoystickButton(ballController, 5);
 	private final Button launchLowGoal = new JoystickButton(ballController, 3);//7
 	private final Button extendIntake = new JoystickButton(ballController, 2);//8
 	private final Button shootNow = new JoystickButton(ballController,  6);
@@ -83,7 +83,7 @@ public class OI {
 			//toggleGear       = new JoystickButton(driveController, 5);
 			//toggleGear.whenPressed    (new ToggleGear());
 			toggleGear.whenPressed(new ToggleGear());
-			toggleLauncherLockin.whileHeld(new ToggleLauncherLockin());
+			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
@@ -139,6 +139,8 @@ public class OI {
 	    public boolean getBallY(){
 	        	return ballController.getRawButton(8);
 	    }
-	    
+	    public Joystick getDriveContoller(){
+	    	return driveController;
+	    }
 }
 
