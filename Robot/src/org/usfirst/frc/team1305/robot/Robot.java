@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
+import org.usfirst.frc.team1305.robot.commands.AutonomousTurnLeft;
+import org.usfirst.frc.team1305.robot.commands.AutonomousTurnRight;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
@@ -28,6 +30,7 @@ public class Robot extends IterativeRobot {
 	Joystick driveController;
 	public static final int X_BUTTON = 3;
 	public static final int Y_BUTTON = 4;
+	public static final int A_BUTTON = 1;
 	int autoMode = -1;
 	Command trialAutonomousCommand;
 	
@@ -56,16 +59,22 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		
 		SmartDashboard.putString("indisabledPeriodic", "true");
-		if (driveController.getRawButton(X_BUTTON) && autoMode == 1){
+		if (driveController.getRawButton(X_BUTTON) && autoMode != 1){
 			autoMode = 1;
 			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousStub();
+			trialAutonomousCommand = new AutonomousTurnLeft();
 			
 		}
-		else if (driveController.getRawButton(Y_BUTTON) && autoMode == -1){
+		else if (driveController.getRawButton(Y_BUTTON) && autoMode != 2){
+			autoMode = 2;
+			Scheduler.getInstance().removeAll();
+			trialAutonomousCommand = new AutonomousTurnRight();
+			
+		}
+		else if (driveController.getRawButton(A_BUTTON) && autoMode != -1){
 			autoMode = -1;
 			Scheduler.getInstance().removeAll();
-			//trialAutonomousCommand = new AutonomousStub();
+			//trialAutonomousCommand = new AutonomousTurnRight();
 			
 		}
 		switch(autoMode){
@@ -74,11 +83,15 @@ public class Robot extends IterativeRobot {
 			break;
 			
 		case 1:
-			SmartDashboard.putString("Auto", "autonomousStub");
+			SmartDashboard.putString("Auto", "TurnLeft");
+			break;
+			
+		case 2:
+			SmartDashboard.putString("Auto", "TurnRight");
 			break;
 		
 		}
-		System.out.println(autoMode);
+		
 	}
 
     public void autonomousInit() {

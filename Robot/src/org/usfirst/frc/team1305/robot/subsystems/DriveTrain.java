@@ -120,5 +120,15 @@ public class DriveTrain extends Subsystem {
     	ml2.setVoltageRampRate(rampRate);
     	mr2.setVoltageRampRate(rampRate);
     }
+    
+    public void turnLeft(){
+    	mr1.set(0.25);
+    	mr2.set(0.25);
+    }
+    
+    public void turnRight(){
+    	ml1.set(0.25);
+    	ml2.set(0.25);
+    }
 }
 
