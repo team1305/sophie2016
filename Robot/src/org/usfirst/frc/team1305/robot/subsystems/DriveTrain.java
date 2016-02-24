@@ -122,11 +122,13 @@ public class DriveTrain extends Subsystem {
     }
     
     public void turnLeft(){
+    	System.out.println("TurningLeft");
     	mr1.set(0.25);
     	mr2.set(0.25);
     }
     
     public void turnRight(){
+    	System.out.println("TurningRight");
     	ml1.set(0.25);
     	ml2.set(0.25);
     }

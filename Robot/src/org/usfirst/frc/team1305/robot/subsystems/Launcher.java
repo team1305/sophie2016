@@ -41,7 +41,7 @@ public class Launcher extends Subsystem {
 	
 	double targetSpeed ;
 	double _throttleBeforeLockin;
-	double _targetFlywheelPercent = 0.435;
+	double _targetFlywheelPercent = 0.44;
 	//Preferences prefs;
 	//private String KEY_PREFS_TARGET_FLYWHEEL_PERCENT = "TargetFlywheelPercent";
 	StringBuilder _sb = new StringBuilder();
