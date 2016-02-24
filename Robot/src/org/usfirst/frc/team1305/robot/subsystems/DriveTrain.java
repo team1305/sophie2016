@@ -121,10 +121,12 @@ public class DriveTrain extends Subsystem {
     	mr2.setVoltageRampRate(rampRate);
     }
     
-    public void turnLeft(){
-    	System.out.println("TurningLeft");
-    	mr1.set(0.25);
-    	mr2.set(0.25);
+    public void driveForward(){
+    	System.out.println("AutoDriveCross");
+    	mr1.set(-0.45);
+    	mr2.set(-0.45);
+    	ml1.set(-0.47);
+    	ml2.set(-0.47);
     }
     
     public void turnRight(){
@@ -133,6 +135,7 @@ public class DriveTrain extends Subsystem {
     	ml2.set(0.25);
     }
     public void stopDriving(){
+    	System.out.println("Stopping");
     	ml1.set(0);
     	ml2.set(0);
     	mr1.set(0);

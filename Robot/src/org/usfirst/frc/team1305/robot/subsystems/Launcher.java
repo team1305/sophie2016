@@ -27,7 +27,7 @@ public class Launcher extends Subsystem {
 	private Timer retractIntakeTimer = new Timer();
 	private double LAUNCH_DELAY_SECONDS = 2.2;
 	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
-	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.2;
+	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
 	private double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
 	private boolean isAutoLaunch = false;
 
@@ -112,7 +112,8 @@ public class Launcher extends Subsystem {
     		Intake_Talon.set(-1);
     		_fly_wheel_talon_right.changeControlMode(TalonControlMode.PercentVbus);
         	_fly_wheel_talon_right.set(FLY_WHEEL_LOW_GOAL_SPEED);
-        	_fly_wheel_talon_left.set(_fly_wheel_talon_right.get());
+        	//_fly_wheel_talon_left.set(_fly_wheel_talon_right.get());
+        	
     		
     		//SmartDashboard.putBoolean("Intake", intakeIsOut);
     	}

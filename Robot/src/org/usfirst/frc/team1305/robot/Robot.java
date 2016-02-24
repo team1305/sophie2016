@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1305.robot.commands.AutonomousCommandGroup;
+import org.usfirst.frc.team1305.robot.commands.AutonomousDriveAndCommandGroup;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
-import org.usfirst.frc.team1305.robot.commands.AutonomousTurnLeft;
+import org.usfirst.frc.team1305.robot.commands.AutonomousDriveForward;
 import org.usfirst.frc.team1305.robot.commands.AutonomousTurnRight;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 		if (driveController.getRawButton(X_BUTTON) && autoMode != 1){
 			autoMode = 1;
 			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousCommandGroup();
+			trialAutonomousCommand = new AutonomousDriveAndCommandGroup();
 			
 		}
 		else if (driveController.getRawButton(Y_BUTTON) && autoMode != 2){
@@ -98,16 +98,18 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+        
+        System.out.println("autonomousPeriodic");
+        
+        
+        trialAutonomousCommand.start();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	System.out.println("autonomousPeriodic");
-        Scheduler.getInstance().run();
-        
-        trialAutonomousCommand.start();
+    	Scheduler.getInstance().run();
     }
 
     public void teleopInit() {

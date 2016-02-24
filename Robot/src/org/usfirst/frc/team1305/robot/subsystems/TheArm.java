@@ -5,6 +5,7 @@ import org.usfirst.frc.team1305.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team1305.robot.commands.RetractArm;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,7 +24,7 @@ public class TheArm extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
- //   	setDefaultCommand(new ExtendArm());
+    	setDefaultCommand(new RetractArm());
     }
     public void extendArm(){
     	Arm_Actuator.set(true);
@@ -37,5 +38,8 @@ public class TheArm extends Subsystem {
 		SmartDashboard.putBoolean("Arm Out", Arm_Actuator.get());
 	}
     
+    public void AutonomousArm(){
+    	Arm_Actuator.set(true);
+    }
 }
 

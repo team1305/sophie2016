@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 
-public class AutonomousTurnRight extends Command {	
+public class AutonomousDriveForward2 extends Command {	
 	Timer endTimer = new Timer();
-    public AutonomousTurnRight() {
+    public AutonomousDriveForward2() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(Drive);
     	requires(Robot.drivetrain);
@@ -22,14 +22,16 @@ public class AutonomousTurnRight extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//endTimer.reset();
     	endTimer.start();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         	
         	//apply stick values to the arcadedrive function
-        	Robot.drivetrain.turnRight();
+        	Robot.drivetrain.driveForward();
 //    	}
 
 	}
@@ -37,7 +39,8 @@ public class AutonomousTurnRight extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	System.out.println(endTimer.get());
-        return endTimer.get() > 3;
+        return endTimer.get() > 4;
+        
     }
 
     // Called once after isFinished returns true
