@@ -13,6 +13,8 @@ import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
 
+
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 	
     Command autonomousCommand;
 
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -75,6 +78,7 @@ public class Robot extends IterativeRobot {
 			break;
 		
 		}
+		System.out.println(autoMode);
 	}
 
     public void autonomousInit() {
