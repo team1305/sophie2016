@@ -51,7 +51,8 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		
+		SmartDashboard.putString("indisabledPeriodic", "true");
 		if (driveController.getRawButton(X_BUTTON) && autoMode == 1){
 			autoMode = 1;
 			Scheduler.getInstance().removeAll();
