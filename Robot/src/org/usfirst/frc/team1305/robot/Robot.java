@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 	public static final Camera camera = new Camera(1);
 	public static final TheArm arm = new TheArm();
 	
-    Command autonomousCommand;
+    //Command autonomousCommand;
 
     
     /**
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousStub();
+		trialAutonomousCommand = new AutonomousStub();
         driveController = oi.getDriveContoller();
        
         	
@@ -97,12 +97,12 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (trialAutonomousCommand != null) trialAutonomousCommand.start();
         
         System.out.println("autonomousPeriodic");
         
         
-        trialAutonomousCommand.start();
+        //ks 2016-03-06 trialAutonomousCommand.start();
     }
 
     /**
@@ -117,7 +117,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (trialAutonomousCommand != null) trialAutonomousCommand.cancel();
     }
 
     /**
