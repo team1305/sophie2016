@@ -12,6 +12,8 @@ import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
 import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
 import org.usfirst.frc.team1305.robot.commands.ShootNow;
 import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
+import org.usfirst.frc.team1305.robot.commands.NotUsedClimb;
+import org.usfirst.frc.team1305.robot.commands.NotUsedClimberToggleTilt;
 import org.usfirst.frc.team1305.robot.commands.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
 
@@ -64,13 +66,16 @@ public class OI {
 	private final Button toggleGear = new JoystickButton(driveController, 6);
 	private final Button extendArm = new JoystickButton(driveController, 5);
 	private final Button toggleDriveSmoothing = new JoystickButton(driveController, 9);
-	
+	//private final Button climberup = new JoystickButton(driveController, 1);
+	//private final Button climberdown = new JoystickButton(driveController, 4);
+	//private final Button tiltout = new JoystickButton(driveController, 2);
 
 	
 	private final Button toggleLauncherLockin = new JoystickButton(ballController, 5);
 	private final Button launchLowGoal = new JoystickButton(ballController, 3);//7
 	private final Button extendIntake = new JoystickButton(ballController, 2);//8
 	private final Button shootNow = new JoystickButton(ballController,  6);
+	
 	
 	private final boolean invertDriveStick = false;
 	private final boolean invertDriveRotateStick = false;
@@ -85,11 +90,15 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
+			//tiltout.whenPressed(new NotUsedClimberToggleTilt());
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());
 			extendArm.whileHeld(new ExtendArm());
 			shootNow.whileHeld(new ShootNow());
+			//climberup.whileHeld(new NotUsedClimb(1));
+			//climberdown.whileHeld(new NotUsedClimb(-1));
+			
 		}
 
 		public double getDriveXR(){
@@ -139,6 +148,12 @@ public class OI {
 	    public boolean getBallY(){
 	        	return ballController.getRawButton(8);
 	    }
+	    
+	    public int getPOV(){
+	    	//System.out.println("POV in oi" + driveController.getPOV(0));
+	    	return ballController.getPOV();
+	    }
+	    
 	    public Joystick getDriveContoller(){
 	    	return driveController;
 	    }

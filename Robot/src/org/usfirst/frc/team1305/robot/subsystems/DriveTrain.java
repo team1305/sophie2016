@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1305.robot.subsystems;
 
 
+import org.usfirst.frc.team1305.robot.Robot;
 import org.usfirst.frc.team1305.robot.RobotMap;
 import org.usfirst.frc.team1305.robot.commands.Drive;
 
@@ -20,6 +21,8 @@ public class DriveTrain extends Subsystem {
 	CANTalon ml2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L2);
 	CANTalon mr1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R1);
 	CANTalon mr2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R2);
+	CANTalon leftEncoder = ml2;
+	CANTalon rightEncode = mr1;
 	
 	private boolean armPerspective = false;
 	public 	boolean isLowGear = false;
@@ -37,6 +40,12 @@ public class DriveTrain extends Subsystem {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new Drive());
     }
+    
+    public DriveTrain()
+	{
+    	leftEncoder.reverseSensor(true);
+    	rightEncode.reverseSensor(false);
+	}
     
     /**
      * Toggles digital low gear on/off.
@@ -121,8 +130,19 @@ public class DriveTrain extends Subsystem {
     	mr2.setVoltageRampRate(rampRate);
     }
     
+    public void resetEncoders()
+    {
+    	ml2.setEncPosition(0);
+    	mr1.setEncPosition(0);
+    }
+    
+    public double getDistance()
+    {
+    	System.out.println("encoderPos" + (leftEncoder.getEncPosition() + rightEncode.getEncPosition())/2);
+    	return (ml2.getEncPosition() + mr1.getEncPosition())/2;
+    }
+    
     public void driveForward(){
-    	System.out.println("AutoDriveCross");
     	mr1.set(-0.45);
     	mr2.set(-0.45);
     	ml1.set(-0.47);

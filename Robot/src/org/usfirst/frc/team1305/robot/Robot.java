@@ -15,6 +15,7 @@ import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
+import org.usfirst.frc.team1305.robot.subsystems.Climber;
 
 
 
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot {
 	Joystick driveController;
 	public static final int X_BUTTON = 3;
 	public static final int Y_BUTTON = 4;
+	public static final int B_BUTTON = 2;
 	public static final int A_BUTTON = 1;
 	int autoMode = -1;
 	Command trialAutonomousCommand;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final Launcher launcher = new Launcher();
 	public static final Camera camera = new Camera(1);
 	public static final TheArm arm = new TheArm();
+	public static final Climber climber = new Climber();
 	
     //Command autonomousCommand;
 
@@ -69,13 +72,18 @@ public class Robot extends IterativeRobot {
 		else if (driveController.getRawButton(Y_BUTTON) && autoMode != 2){
 			autoMode = 2;
 			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousTurnRight();
+			trialAutonomousCommand = new AutonomousDriveForward(1.8);
+			
+		}
+		else if (driveController.getRawButton(B_BUTTON) && autoMode != 3){
+			autoMode = 3;
+			Scheduler.getInstance().removeAll();
+			trialAutonomousCommand = new AutonomousDriveForward(4);
 			
 		}
 		else if (driveController.getRawButton(A_BUTTON) && autoMode != -1){
 			autoMode = -1;
 			Scheduler.getInstance().removeAll();
-			//trialAutonomousCommand = new AutonomousTurnRight();
 			
 		}
 		switch(autoMode){
@@ -84,13 +92,16 @@ public class Robot extends IterativeRobot {
 			break;
 			
 		case 1:
-			SmartDashboard.putString("Auto", "TurnLeft");
+			SmartDashboard.putString("Auto", "ChevalDeFrise");
 			break;
 			
 		case 2:
-			SmartDashboard.putString("Auto", "TurnRight");
+			SmartDashboard.putString("Auto", "DriveForwardShort");
 			break;
 		
+		case 3:
+			SmartDashboard.putString("Auto", "DriveForwardLong");
+			break;
 		}
 		
 	}

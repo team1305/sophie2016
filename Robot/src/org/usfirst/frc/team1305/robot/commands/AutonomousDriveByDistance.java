@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 
-public class AutonomousDriveForward2 extends Command {	
+public class AutonomousDriveByDistance extends Command {	
 	Timer endTimer = new Timer();
-    public AutonomousDriveForward2() {
+	private double distanceInches;
+    public AutonomousDriveByDistance(double DistanceInches ) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(Drive);
     	requires(Robot.drivetrain);
+    	distanceInches = DistanceInches;
     }
 
     // Called just before this Command runs the first time
@@ -38,8 +40,8 @@ public class AutonomousDriveForward2 extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println(endTimer.get());
-        return endTimer.get() > 4;
+    	System.out.println(Robot.drivetrain.getDistance());
+        return Robot.drivetrain.getDistance() > distanceInches;
         
     }
 
