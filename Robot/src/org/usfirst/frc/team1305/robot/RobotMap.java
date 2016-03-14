@@ -32,11 +32,17 @@ public class RobotMap {
 	public static final int CAN_SOLENOID = 21;
 	public static final int SOLENOID_CH_SLIDER = 0;
 	public static final int SOLENOID_CH_ARM = 1;
-	public static final int CAN_DEVICE_LIFTER_SOLENOID = 62;
-	public static final int SOLENOID_CH_LIFT = 7;
+	public static final int CAN_DEVICE_LIFTER_SOLENOID = 22;
+	public static final int SOLENOID_CH_LIFT = 2;
 	
 	public static final int PWM_CLIMB_MOTOR_L = 9;
 	//public static final int PWM_CLIMB_MOTOR_R = 1;
 	
 	public static final int DIO_LIMIT_RETRACT_STOP = 0;
+	
+	public static final double 
+		driveTrainEncoderDistancePerPulse  = 6 * Math.PI / 2048;
+
+		
+	
 }

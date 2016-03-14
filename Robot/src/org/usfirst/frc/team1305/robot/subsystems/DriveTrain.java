@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1305.robot.subsystems;
 
-
-import org.usfirst.frc.team1305.robot.Robot;
 import org.usfirst.frc.team1305.robot.RobotMap;
 import org.usfirst.frc.team1305.robot.commands.Drive;
 
@@ -79,7 +77,7 @@ public class DriveTrain extends Subsystem {
     	}
     	
     	if(isDriveSmoothing){
-    		this.setRampRate(100);
+    		this.setRampRate(120);
     		
     	}
     	else
@@ -142,11 +140,46 @@ public class DriveTrain extends Subsystem {
     	return (ml2.getEncPosition() + mr1.getEncPosition())/2;
     }
     
-    public void driveForward(){
-    	mr1.set(-0.45);
-    	mr2.set(-0.45);
-    	ml1.set(-0.47);
-    	ml2.set(-0.47);
+    public void driveForwardSlow(){
+    	mr1.set(0.465);
+    	mr2.set(0.465);
+    	ml1.set(0.45);
+    	ml2.set(0.45);
+    }
+    
+    public void driveForwardFast(){
+    	mr1.set(1.0);
+    	mr2.set(1.0);
+    	ml1.set(1.0);
+    	ml2.set(1.0);
+    }
+    
+    public void driveBackwardSlow(){
+    	mr1.set(-0.465);
+    	mr2.set(-0.465);
+    	ml1.set(-0.45);
+    	ml2.set(-0.45);
+    }
+    
+    public void driveBackwardFast(){
+    	mr1.set(-1.0);
+    	mr2.set(-1.0);
+    	ml1.set(-1.0);
+    	ml2.set(-1.0);
+    }
+    
+    public void pivotCounterClockwise(){
+    	mr1.set(0);
+    	mr2.set(0);
+    	ml1.set(-0.55);
+    	ml2.set(-0.55);
+    }
+    
+    public void pivotClockwise(){
+    	mr1.set(-0.55);
+    	mr2.set(-0.55);
+    	ml1.set(0);
+    	ml2.set(0);
     }
     
     public void turnRight(){

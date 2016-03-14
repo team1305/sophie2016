@@ -5,17 +5,23 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1305.robot.commands.AutonomousDriveAndCommandGroup;
+import org.usfirst.frc.team1305.robot.commands.AutoChevyFries;
+import org.usfirst.frc.team1305.robot.commands.AutoHigh;
+import org.usfirst.frc.team1305.robot.commands.AutoLow;
+import org.usfirst.frc.team1305.robot.commands.AutoLowCross;
+import org.usfirst.frc.team1305.robot.commands.AutoMike;
+import org.usfirst.frc.team1305.robot.commands.AutoNothing;
+import org.usfirst.frc.team1305.robot.commands.AutoPortCullis;
+import org.usfirst.frc.team1305.robot.commands.AutoPowerCross;
+import org.usfirst.frc.team1305.robot.commands.AutoStephCurry;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
-import org.usfirst.frc.team1305.robot.commands.AutonomousDriveForward;
-import org.usfirst.frc.team1305.robot.commands.AutonomousTurnRight;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
-import org.usfirst.frc.team1305.robot.subsystems.Climber;
 
 
 
@@ -35,13 +41,14 @@ public class Robot extends IterativeRobot {
 	public static final int B_BUTTON = 2;
 	public static final int A_BUTTON = 1;
 	int autoMode = -1;
-	Command trialAutonomousCommand;
+	Command AutonomousCommand;
+	SendableChooser AutoChooser;
 	
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Launcher launcher = new Launcher();
 	public static final Camera camera = new Camera(1);
 	public static final TheArm arm = new TheArm();
-	public static final Climber climber = new Climber();
+
 	
     //Command autonomousCommand;
 
@@ -53,67 +60,29 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-		trialAutonomousCommand = new AutonomousStub();
+		AutonomousCommand = new AutonomousStub();
         driveController = oi.getDriveContoller();
-       
-        	
-        
+        AutoChooser = new SendableChooser();
+        AutoChooser.addDefault("Do Nothing", new AutoNothing());
+        AutoChooser.addObject("Low Cross", new AutoLowCross());
+        AutoChooser.addObject("Power Cross", new AutoPowerCross());
+        AutoChooser.addObject("Low Goal", new AutoLow());
+        AutoChooser.addObject("High Goal", new AutoHigh());
+        AutoChooser.addObject("Port Cullis", new AutoPortCullis());
+        AutoChooser.addObject("Chevy and Fries", new AutoChevyFries());
+        AutoChooser.addObject("Magic Mikey", new AutoMike());
+        AutoChooser.addObject("Steph Curry", new AutoStephCurry());
+        SmartDashboard.putData("Auto Mode:", AutoChooser);
     }
 	
 	public void disabledPeriodic() {
-		
-		SmartDashboard.putString("indisabledPeriodic", "true");
-		if (driveController.getRawButton(X_BUTTON) && autoMode != 1){
-			autoMode = 1;
-			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousDriveAndCommandGroup();
-			
-		}
-		else if (driveController.getRawButton(Y_BUTTON) && autoMode != 2){
-			autoMode = 2;
-			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousDriveForward(1.8);
-			
-		}
-		else if (driveController.getRawButton(B_BUTTON) && autoMode != 3){
-			autoMode = 3;
-			Scheduler.getInstance().removeAll();
-			trialAutonomousCommand = new AutonomousDriveForward(4);
-			
-		}
-		else if (driveController.getRawButton(A_BUTTON) && autoMode != -1){
-			autoMode = -1;
-			Scheduler.getInstance().removeAll();
-			
-		}
-		switch(autoMode){
-		case -1:
-			SmartDashboard.putString("Auto", "none");
-			break;
-			
-		case 1:
-			SmartDashboard.putString("Auto", "ChevalDeFrise");
-			break;
-			
-		case 2:
-			SmartDashboard.putString("Auto", "DriveForwardShort");
-			break;
-		
-		case 3:
-			SmartDashboard.putString("Auto", "DriveForwardLong");
-			break;
-		}
-		
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (trialAutonomousCommand != null) trialAutonomousCommand.start();
-        
-        System.out.println("autonomousPeriodic");
-        
-        
-        //ks 2016-03-06 trialAutonomousCommand.start();
+    	AutonomousCommand = (Command) AutoChooser.getSelected();
+    	AutonomousCommand.start();
+    	//ks 2016-03-06 trialAutonomousCommand.start();
     }
 
     /**
@@ -128,7 +97,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (trialAutonomousCommand != null) trialAutonomousCommand.cancel();
+        if (AutonomousCommand != null) AutonomousCommand.cancel();
     }
 
     /**

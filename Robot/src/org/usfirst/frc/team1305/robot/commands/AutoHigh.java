@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousTurnRightCommandGroup extends CommandGroup {
+public class AutoHigh extends CommandGroup {
     
-    public  AutonomousTurnRightCommandGroup() {
+    public  AutoHigh() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,7 +24,5 @@ public class AutonomousTurnRightCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonomousTurnRight());
-    	addSequential(new StopDriving());
     }
 }

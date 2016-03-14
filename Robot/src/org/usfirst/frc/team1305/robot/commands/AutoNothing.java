@@ -1,15 +1,13 @@
 package org.usfirst.frc.team1305.robot.commands;
 
-import org.usfirst.frc.team1305.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutonomousDriveByDistanceCommandGroup extends CommandGroup {
+public class AutoNothing extends CommandGroup {
     
-    public  AutonomousDriveByDistanceCommandGroup() {
+    public  AutoNothing() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -26,17 +24,5 @@ public class AutonomousDriveByDistanceCommandGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	//private final static DriveDistance;
-    	//private final static DrivePower;
-    	Robot.drivetrain.resetEncoders();
-    	addSequential(new AutonomousDriveByDistance(1.6));
-    	addSequential(new StopDriving());
-    	addSequential(new AutonomousExtendArm());
-    	addSequential(new AutonomousDriveByDistance(4));
-    	addSequential(new RetractArm());
-    	addSequential(new AutonomousDriveByDistance(1.6));
-    	addSequential(new StopDriving());
-    	
     }
 }

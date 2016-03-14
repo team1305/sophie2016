@@ -12,8 +12,6 @@ import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
 import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
 import org.usfirst.frc.team1305.robot.commands.ShootNow;
 import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
-import org.usfirst.frc.team1305.robot.commands.NotUsedClimb;
-import org.usfirst.frc.team1305.robot.commands.NotUsedClimberToggleTilt;
 import org.usfirst.frc.team1305.robot.commands.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
 
@@ -100,7 +98,7 @@ public class OI {
 			//climberdown.whileHeld(new NotUsedClimb(-1));
 			
 		}
-
+		
 		public double getDriveXR(){
 			if (invertDriveRotateStick)
 	        {

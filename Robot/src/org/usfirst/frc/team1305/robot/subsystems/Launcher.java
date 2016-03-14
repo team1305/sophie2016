@@ -30,6 +30,7 @@ public class Launcher extends Subsystem {
 	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
 	private double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
 	private boolean isAutoLaunch = false;
+	private boolean isOnTarget = false;
 
 	private int MAX_LAUNCHER_RPM = 6200;
 	private double motorOutput; 
@@ -41,7 +42,7 @@ public class Launcher extends Subsystem {
 	
 	double targetSpeed ;
 	double _throttleBeforeLockin;
-	double _targetFlywheelPercent = 0.44;
+	double _targetFlywheelPercent = 0.445;
 	//Preferences prefs;
 	//private String KEY_PREFS_TARGET_FLYWHEEL_PERCENT = "TargetFlywheelPercent";
 	StringBuilder _sb = new StringBuilder();
@@ -153,6 +154,11 @@ public class Launcher extends Subsystem {
             _sb.append(_fly_wheel_talon_right.getClosedLoopError());
             _sb.append("\ttrg:");
             _sb.append(targetSpeed);
+            if(Math.abs(_fly_wheel_talon_right.getSpeed() - 4020) < 50)
+            	isOnTarget = true;
+            else
+            	isOnTarget = false;
+            
         } else {
         	/* Percent voltage mode */
         	_fly_wheel_talon_right.changeControlMode(TalonControlMode.PercentVbus);
@@ -216,9 +222,19 @@ public class Launcher extends Subsystem {
     	
     	
     }
+    public boolean getLockedIn(){
+    	return isOnTarget;
+    }
     public void ShootNow(){
-    	Intake_Talon.set(1);
+    		Intake_Talon.set(1);
 	}
-
+    
+    public void SpitOut(){
+    	Intake_Talon.set(-1);
+    }
+    
+    public void StopIntake(){
+    	Intake_Talon.set(0);
+    }
 }
 
