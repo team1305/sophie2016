@@ -18,7 +18,6 @@ public class RobotMap {
 	public static final int AXIS_DRIVETRAIN_MOVE   = OI.AXIS_Y;
 	public static final int AXIS_DRIVETRAIN_ROTATE = OI.AXIS_X;
 
-
 	
 	public static final int CAN_DEVICE_DRIVE_L1 = 11;//1;
 	public static final int CAN_DEVICE_DRIVE_L2 = 12;//2;
@@ -27,7 +26,6 @@ public class RobotMap {
 	public static final int CAN_DEVICE_LAUNCHER_L = 14;//13,14
 	public static final int CAN_DEVICE_LAUNCHER_R = 13;//13,14
 	public static final int CAN_DEVICE_INTAKEROLLER = 10;
-	
 	
 	public static final int CAN_SOLENOID = 21;
 	public static final int SOLENOID_CH_SLIDER = 0;

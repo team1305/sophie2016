@@ -41,6 +41,7 @@ public class DriveTrain extends Subsystem {
     
     public DriveTrain()
 	{
+    
     	leftEncoder.reverseSensor(true);
     	rightEncode.reverseSensor(false);
 	}
