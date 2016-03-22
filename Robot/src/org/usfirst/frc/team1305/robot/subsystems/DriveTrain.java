@@ -6,6 +6,8 @@ import org.usfirst.frc.team1305.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,6 +30,19 @@ public class DriveTrain extends Subsystem {
 	private double rotateScalingFactor = 1; //1.2; //1.4;
 	private double lowGearScalingFactor = .66;
 	private boolean isDriveSmoothing = true;
+	private double SLOW_DRIVE_SPEED = 0.03;
+	private double FAST_DRIVE_SPEED = 1;
+	private int MAX_DRIVE_RPM = 6200;
+	double targetSpeed;
+	public int getPosition;
+	private int isgetPosition;
+	public int setPosition;
+	public int getPivotPosition;
+	private int isPivotPosition;
+	public int getFastPosition;
+	private int isFastPosition;
+	public int getBackwardsPosition;
+	private int isBackwardsPosition;
 	
 	private RobotDrive drive1 = new RobotDrive(ml1, ml2, mr1, mr2);
     
@@ -41,9 +56,41 @@ public class DriveTrain extends Subsystem {
     
     public DriveTrain()
 	{
-    
-    	leftEncoder.reverseSensor(true);
-    	rightEncode.reverseSensor(false);
+    	leftEncoder.reverseSensor(false);
+    	rightEncode.reverseSensor(true);
+    	
+    	getPosition = mr1.getEncPosition();
+    	isgetPosition = getPosition;
+    	isPivotPosition = getPosition;
+    	isBackwardsPosition = getPosition;
+    	isFastPosition = getPosition;
+    	
+    	ml1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        ml1.reverseSensor(false);
+
+        /* set the peak and nominal outputs, 12V means full */
+        ml1.configNominalOutputVoltage(+0.0f, -0.0f);
+        ml1.configPeakOutputVoltage(+12.0f, -12.0f); //Launcher only positive spin 
+        /* set closed loop gains in slot0 */
+        ml1.setProfile(0);
+        ml1.setF(0.1097);//0.1097);
+        ml1.setP(0.15);//.22);
+        ml1.setI(0); 
+        ml1.setD(0);
+        
+        mr1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        mr1.reverseSensor(true);
+
+        /* set the peak and nominal outputs, 12V means full */
+        mr1.configNominalOutputVoltage(+0.0f, -0.0f);
+        mr1.configPeakOutputVoltage(+12.0f, -12.0f); //Launcher only positive spin 
+        /* set closed loop gains in slot0 */
+        mr1.setProfile(0);
+        mr1.setF(0.1097);//0.1097);
+        mr1.setP(0.15);//.22);
+        mr1.setI(0); 
+        mr1.setD(0);
+
 	}
     
     /**
@@ -142,24 +189,59 @@ public class DriveTrain extends Subsystem {
     }
     
     public void driveForwardSlow(){
-    	mr1.set(0.465);
-    	mr2.set(0.465);
-    	ml1.set(0.45);
-    	ml2.set(0.45);
+    	if (Math.abs(isgetPosition) > 0){
+    		mr1.setEncPosition(0);
+    		isgetPosition = 0;
+    	}
+    	ml1.changeControlMode(TalonControlMode.Speed);
+    	mr1.changeControlMode(TalonControlMode.Speed);
+        mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	ml1.set(targetSpeed);
+    	mr1.set(targetSpeed);
+    	ml2.set(ml1.getDeviceID());
+        mr2.set(mr1.getDeviceID());	        
+        getPosition = mr1.getEncPosition();
+
+        
     }
     
     public void driveForwardFast(){
-    	mr1.set(1.0);
-    	mr2.set(1.0);
-    	ml1.set(1.0);
-    	ml2.set(1.0);
+    	if (Math.abs(isFastPosition) > 0){
+    		mr1.setEncPosition(0);
+    		isFastPosition = 0;
+    	}
+    	ml1.changeControlMode(TalonControlMode.Speed);
+    	mr1.changeControlMode(TalonControlMode.Speed);
+        mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	targetSpeed = FAST_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	ml1.set(targetSpeed);
+    	mr1.set(targetSpeed);
+    	ml2.set(ml1.getDeviceID());
+        mr2.set(mr1.getDeviceID());	        
+        getFastPosition = mr1.getEncPosition();
     }
     
     public void driveBackwardSlow(){
-    	mr1.set(-0.465);
-    	mr2.set(-0.465);
-    	ml1.set(-0.45);
-    	ml2.set(-0.45);
+    	if (Math.abs(isBackwardsPosition) > 0){
+    		mr1.setEncPosition(0);
+    		getPosition = mr1.getEncPosition();
+    		isBackwardsPosition = 0;
+    	}
+    	ml1.changeControlMode(TalonControlMode.Speed);
+    	mr1.changeControlMode(TalonControlMode.Speed);
+        mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	ml1.set(-targetSpeed);
+    	mr1.set(-targetSpeed);
+    	ml2.set(ml1.getDeviceID());
+        mr2.set(mr1.getDeviceID());	        
+        getPosition = mr1.getEncPosition();
+        System.out.println("Backwards");
+        System.out.println(getBackwardsPosition);
     }
     
     public void driveBackwardFast(){
@@ -177,10 +259,21 @@ public class DriveTrain extends Subsystem {
     }
     
     public void pivotClockwise(){
-    	mr1.set(-0.55);
-    	mr2.set(-0.55);
-    	ml1.set(0);
-    	ml2.set(0);
+    	if (Math.abs(isPivotPosition) > 0){
+    		mr1.setEncPosition(0);
+    		isPivotPosition = 0;
+    	}
+    	ml1.changeControlMode(TalonControlMode.Speed);
+    	mr1.changeControlMode(TalonControlMode.Speed);
+        mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	ml1.set(targetSpeed);
+    	mr1.set(-targetSpeed);
+    	ml2.set(ml1.getDeviceID());
+        mr2.set(mr1.getDeviceID());	        
+        getPivotPosition = mr1.getEncPosition();
+        System.out.println(getPivotPosition);
     }
     
     public void turnRight(){

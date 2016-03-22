@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoPowerCross extends CommandGroup {
+public class AutoCMDGroupForwardLong extends CommandGroup {
     
-    public  AutoPowerCross() {
-    	addSequential(new AutoPowerDriveForward(3));
+    public  AutoCMDGroupForwardLong() {
+    	addSequential(new AutoMoveFastToPosition(200));
     	addSequential(new StopDriving());
     }
 }

@@ -88,14 +88,11 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
-			//tiltout.whenPressed(new NotUsedClimberToggleTilt());
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());
 			extendArm.whileHeld(new ExtendArm());
 			shootNow.whileHeld(new ShootNow());
-			//climberup.whileHeld(new NotUsedClimb(1));
-			//climberdown.whileHeld(new NotUsedClimb(-1));
 			
 		}
 		

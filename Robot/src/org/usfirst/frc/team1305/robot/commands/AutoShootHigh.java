@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
- */
+
 public class AutoShootHigh extends Command {
 	private boolean isFinished = false;
 	Timer seqTimer = new Timer();
@@ -44,3 +44,4 @@ public class AutoShootHigh extends Command {
     protected void interrupted() {
     }
 }
+ */

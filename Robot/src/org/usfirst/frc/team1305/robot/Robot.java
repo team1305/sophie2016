@@ -8,20 +8,19 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1305.robot.commands.AutoChevyFries;
-import org.usfirst.frc.team1305.robot.commands.AutoHigh;
-import org.usfirst.frc.team1305.robot.commands.AutoLow;
-import org.usfirst.frc.team1305.robot.commands.AutoLowCross;
-import org.usfirst.frc.team1305.robot.commands.AutoMike;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupChevelDeFrise;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardLong;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardShort;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupHighGoal;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupLowGoal;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupPortculis;
 import org.usfirst.frc.team1305.robot.commands.AutoNothing;
-import org.usfirst.frc.team1305.robot.commands.AutoPortCullis;
-import org.usfirst.frc.team1305.robot.commands.AutoPowerCross;
-import org.usfirst.frc.team1305.robot.commands.AutoStephCurry;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
+import org.usfirst.frc.team1305.robot.subsystems.Climber;
 
 
 
@@ -48,7 +47,7 @@ public class Robot extends IterativeRobot {
 	public static final Launcher launcher = new Launcher();
 	public static final Camera camera = new Camera(1);
 	public static final TheArm arm = new TheArm();
-
+	public static final Climber climber = new Climber();
 	
     //Command autonomousCommand;
 
@@ -64,14 +63,12 @@ public class Robot extends IterativeRobot {
         driveController = oi.getDriveContoller();
         AutoChooser = new SendableChooser();
         AutoChooser.addDefault("Do Nothing", new AutoNothing());
-        AutoChooser.addObject("Low Cross", new AutoLowCross());
-        AutoChooser.addObject("Power Cross", new AutoPowerCross());
-        AutoChooser.addObject("Low Goal", new AutoLow());
-        AutoChooser.addObject("High Goal", new AutoHigh());
-        AutoChooser.addObject("Port Cullis", new AutoPortCullis());
-        AutoChooser.addObject("Chevy and Fries", new AutoChevyFries());
-        AutoChooser.addObject("Magic Mikey", new AutoMike());
-        AutoChooser.addObject("Steph Curry", new AutoStephCurry());
+        AutoChooser.addObject("High Goal", new AutoCMDGroupHighGoal());
+        AutoChooser.addObject("Low Goal", new AutoCMDGroupLowGoal());
+        AutoChooser.addObject("Forward Short (Slow)", new AutoCMDGroupForwardShort());
+        AutoChooser.addObject("Forward Long (Fast)", new AutoCMDGroupForwardLong());
+        AutoChooser.addObject("Chevel de Frise", new AutoCMDGroupChevelDeFrise());
+        AutoChooser.addObject("Portculis", new AutoCMDGroupPortculis());
         SmartDashboard.putData("Auto Mode:", AutoChooser);
     }
 	
