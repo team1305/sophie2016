@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCMDGroupForwardLong extends CommandGroup {
+public class AutoCMDGroupRotateClockwise extends CommandGroup {
     
-    public  AutoCMDGroupForwardLong() {
-    	addSequential(new AutoMoveFastToPosition(125));
+    public  AutoCMDGroupRotateClockwise() {
+    	
+    	addSequential(new AutoPivotClockwise(-9));
     	addSequential(new StopDriving());
     }
 }

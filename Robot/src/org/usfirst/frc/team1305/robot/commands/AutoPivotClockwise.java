@@ -39,6 +39,8 @@ public class AutoPivotClockwise extends Command {
     		negconverted = -convertPosition;
     		SmartDashboard.putNumber("Position Useable Converted:", convertPosition);
     		SmartDashboard.putNumber("Position Useable Converted1:", negconverted);
+    		System.out.println("Turn");
+            System.out.println(negconverted);
         	//apply stick values to the arcadedrive function
     		//System.out.println(convertPosition);
         	Robot.drivetrain.pivotClockwise();

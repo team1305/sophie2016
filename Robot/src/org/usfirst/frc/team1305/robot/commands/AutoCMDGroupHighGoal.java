@@ -8,12 +8,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoCMDGroupHighGoal extends CommandGroup {
     
     public  AutoCMDGroupHighGoal() {
-    	addSequential(new AutoMoveSlowToPosition(100));
-    	addSequential(new AutoPivotClockwise(-3));
-    	addSequential(new AutoMoveSlowToPosition(30));
-    	addSequential(new StopDriving());
+    	addSequential(new AutoMoveSlowToPosition(125));
+    	addSequential(new AutoPivotClockwise(-6));
+    	addSequential(new AutoMoveBackToPosition(-50));
+    	//addSequential(new StopDriving());
     	//addSequential(new ToggleLauncherLockin());
     	//addSequential(new AutoShootHigh());
-    	//addSequential(new ToggleLauncherLockin();
+    	//addSequential(new ToggleLauncherLockin());
+    	addSequential(new StopDriving());
     }
 }

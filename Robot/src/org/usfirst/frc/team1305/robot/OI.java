@@ -70,8 +70,8 @@ public class OI {
 
 	
 	private final Button toggleLauncherLockin = new JoystickButton(ballController, 5);
-	private final Button launchLowGoal = new JoystickButton(ballController, 3);//7
-	private final Button extendIntake = new JoystickButton(ballController, 2);//8
+	private final Button launchLowGoal = new JoystickButton(ballController, 2);//7
+	private final Button extendIntake = new JoystickButton(ballController, 1);//8
 	private final Button shootNow = new JoystickButton(ballController,  6);
 	
 	

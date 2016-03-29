@@ -47,7 +47,7 @@ public class AutoMoveFastToPosition extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return Robot.drivetrain.getPosition > convertPosition; 
+        return Robot.drivetrain.getFastPosition > convertPosition; 
         
     }
 

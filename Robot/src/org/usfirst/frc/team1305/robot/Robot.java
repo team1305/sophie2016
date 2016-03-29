@@ -9,11 +9,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupChevelDeFrise;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupDriveBackwards;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardLong;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardShort;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardSlowLong;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupHighGoal;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupLowGoal;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupPortculis;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupRotateClockwise;
 import org.usfirst.frc.team1305.robot.commands.AutoNothing;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
@@ -60,15 +63,18 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         // instantiate the command used for the autonomous period
 		AutonomousCommand = new AutonomousStub();
-        driveController = oi.getDriveContoller();
+        //driveController = oi.getDriveContoller();
         AutoChooser = new SendableChooser();
         AutoChooser.addDefault("Do Nothing", new AutoNothing());
-        AutoChooser.addObject("High Goal", new AutoCMDGroupHighGoal());
+        AutoChooser.addObject("High Goal 'Steph Cury'", new AutoCMDGroupHighGoal());
         AutoChooser.addObject("Low Goal", new AutoCMDGroupLowGoal());
         AutoChooser.addObject("Forward Short (Slow)", new AutoCMDGroupForwardShort());
+        AutoChooser.addObject("Forward Long (Slow)", new AutoCMDGroupForwardSlowLong());
         AutoChooser.addObject("Forward Long (Fast)", new AutoCMDGroupForwardLong());
         AutoChooser.addObject("Chevel de Frise", new AutoCMDGroupChevelDeFrise());
         AutoChooser.addObject("Portculis", new AutoCMDGroupPortculis());
+        AutoChooser.addObject("Rotate Clockwise", new AutoCMDGroupRotateClockwise());
+        AutoChooser.addObject("Drive Backwards", new AutoCMDGroupDriveBackwards());
         SmartDashboard.putData("Auto Mode:", AutoChooser);
     }
 	
@@ -77,8 +83,10 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	if (AutonomousCommand != null) {
     	AutonomousCommand = (Command) AutoChooser.getSelected();
     	AutonomousCommand.start();
+    	}
     	//ks 2016-03-06 trialAutonomousCommand.start();
     }
 

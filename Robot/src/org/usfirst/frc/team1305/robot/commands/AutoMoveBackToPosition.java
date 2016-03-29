@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1305.robot.commands;
 
 
+import javax.lang.model.element.NestingKind;
+
 import org.usfirst.frc.team1305.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,11 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
-public class AutoMoveSlowBackwardsToPosition extends Command {	
+public class AutoMoveBackToPosition extends Command {	
 	private double setPosition;
 	private double convertPosition;
-	private double negconverted;
-    public AutoMoveSlowBackwardsToPosition(int getPosition) {
+	private double negConvertPosition;
+	private double negToPos;
+    public AutoMoveBackToPosition(int getPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(Drive);
     	requires(Robot.drivetrain);
@@ -33,17 +36,20 @@ public class AutoMoveSlowBackwardsToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-			SmartDashboard.putNumber("Position in Inches:", setPosition);
-			
-			//get setPosition and convert value from inches to usable value for encoders.
-			convertPosition = Math.abs(setPosition)/136*100000;
-			negconverted = -convertPosition;
-			SmartDashboard.putNumber("Position Useable Converted:", convertPosition);
-			SmartDashboard.putNumber("Position Useable Converted1:", negconverted);
-			//apply stick values to the arcadedrive function
-			//System.out.println(convertPosition);
+    		SmartDashboard.putNumber("Position in Inches:", setPosition);
+    		
+    		//get setPosition and convert value from inches to usable value for encoders.
+        	convertPosition = Math.abs(setPosition)/136*100000;
+        	negConvertPosition = Robot.drivetrain.getBackPosition;
+        	negToPos = -convertPosition;
+        	SmartDashboard.putNumber("Position Useable Converted:", convertPosition);
+        	System.out.println("Backwards to Position");
+            System.out.println(convertPosition);
+            System.out.println("New to Position");
+            System.out.println(negConvertPosition);
+            
 			//apply stick values to the driveForwardSlow function
-        	Robot.drivetrain.driveBackwardSlow();
+        	Robot.drivetrain.driveBackwardsSlow2();
 //    	}
 
 	}
@@ -51,7 +57,7 @@ public class AutoMoveSlowBackwardsToPosition extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        return Robot.drivetrain.getPosition > convertPosition; 
+        return Robot.drivetrain.getBackPosition < negToPos; 
         
     }
 

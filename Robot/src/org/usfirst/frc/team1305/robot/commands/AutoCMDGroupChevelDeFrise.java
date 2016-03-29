@@ -10,11 +10,11 @@ public class AutoCMDGroupChevelDeFrise extends CommandGroup {
     public  AutoCMDGroupChevelDeFrise() {
     	addSequential(new AutoMoveSlowToPosition(100));
     	addSequential(new StopDriving());
-    	//addSequential(new ExtendArm());
+    	addSequential(new ExtendArm());
     	addSequential(new AutoMoveSlowToPosition(50));
-    	//addParallel(new ExtendArm());
+    	addParallel(new ExtendArm());
     	addSequential(new AutoMoveSlowToPosition(100));
-    	//addParallel(new RetractArm());
+    	addParallel(new RetractArm());
     	addSequential(new StopDriving());
     }
 }

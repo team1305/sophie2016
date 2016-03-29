@@ -25,7 +25,7 @@ public class Launcher extends Subsystem {
 	private double mtrspeed;
 	private Timer launchDelayTimer = new Timer();
 	private Timer retractIntakeTimer = new Timer();
-	private double LAUNCH_DELAY_SECONDS = 2.2;
+	private double LAUNCH_DELAY_SECONDS = 2.6;
 	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
 	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
 	private double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
