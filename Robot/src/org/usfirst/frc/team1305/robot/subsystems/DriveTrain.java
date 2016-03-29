@@ -19,8 +19,11 @@ public class DriveTrain extends Subsystem {
 	
 	CANTalon ml1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L1);
 	CANTalon ml2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L2);
+	//CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3);
 	CANTalon mr1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R1);
 	CANTalon mr2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R2);
+	//CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3);
+	
 	CANTalon leftEncoder = ml2;
 	CANTalon rightEncode = mr1;
 	
@@ -50,6 +53,7 @@ public class DriveTrain extends Subsystem {
 	
 	
 	private RobotDrive drive1 = new RobotDrive(ml1, ml2, mr1, mr2);
+	//private RobotDrive drive1 = new RobotDrive(ml1, ml2, ml3, mr1, mr2, mr3); //for 6 drive motors
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -125,14 +129,13 @@ public class DriveTrain extends Subsystem {
      */
     public void arcadeDrive(double moveValue, double rotateValue){
     	//check for low gear
-    	//SmartDashboard.putNumber("Move value", moveValue);
-    	//SmartDashboard.putNumber("Rotate value", rotateValue);
-    	//SmartDashboard.putBoolean("Low Gear", isLowGear);
     	if (mr1.getControlMode() != TalonControlMode.PercentVbus){
     		ml2.changeControlMode(TalonControlMode.PercentVbus);
         	mr1.changeControlMode(TalonControlMode.PercentVbus);
         	mr2.changeControlMode(TalonControlMode.PercentVbus);
             ml1.changeControlMode(TalonControlMode.PercentVbus);
+            //ml3.changeControlMode(TalonControlMode.PercentVbus);
+            //mr3.changeControlMode(TalonControlMode.PercentVbus);
     	}
     	
     	if(isLowGear){
@@ -148,9 +151,6 @@ public class DriveTrain extends Subsystem {
     	{
     		this.setRampRate(120);
     	}
-    	
-    	//SmartDashboard.putNumber("Gear-based Move value", moveValue);
-    	//SmartDashboard.putNumber("Gear-based Rotate value", rotateValue);
     	
     	//check perspective and apply
     	if(armPerspective){
@@ -172,14 +172,21 @@ public class DriveTrain extends Subsystem {
      * @param rightValue Handles right base movement of robot.
      */
     public void tankDrive(double leftValue, double rightValue){
+    	if (mr1.getControlMode() != TalonControlMode.PercentVbus){
+    		ml2.changeControlMode(TalonControlMode.PercentVbus);
+        	mr1.changeControlMode(TalonControlMode.PercentVbus);
+        	mr2.changeControlMode(TalonControlMode.PercentVbus);
+            ml1.changeControlMode(TalonControlMode.PercentVbus);
+            //ml3.changeControlMode(TalonControlMode.PercentVbus);
+            //mr3.changeControlMode(TalonControlMode.PercentVbus);
+    	}
+    	
     	if(isLowGear){
     		leftValue /= 1.6;
     		rightValue /= 1.6;
     	}
     	if(armPerspective){
         	drive1.tankDrive(-rightValue/1.3, -leftValue/1.3);
-        	//SmartDashboard.putNumber("RightDrive", rightValue);
-        	//SmartDashboard.putNumber("LeftDrive", leftValue);
     	}
     	else{
         	drive1.tankDrive(leftValue/1.3, rightValue/1.3);
@@ -190,6 +197,9 @@ public class DriveTrain extends Subsystem {
     	mr1.setVoltageRampRate(rampRate);
     	ml2.setVoltageRampRate(rampRate);
     	mr2.setVoltageRampRate(rampRate);
+    	//ml3.setVoltageRampRate(rampRate);
+    	//mr3.setVoltageRampRate(rampRate);
+    	
     }
     
     public void resetEncoders()
@@ -214,11 +224,16 @@ public class DriveTrain extends Subsystem {
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
     	ml2.set(targetSpeed);
     	mr1.set(targetSpeed);
     	ml1.set(ml2.getDeviceID());
-        mr2.set(mr1.getDeviceID());	        
+        mr2.set(mr1.getDeviceID());
+        //ml3.set(ml2.getDeviceID());
+        //mr3.set(mr1.getDeviceID());	 
         getPosition = mr1.getEncPosition();
 
         
@@ -234,11 +249,16 @@ public class DriveTrain extends Subsystem {
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        
     	targetSpeed = FAST_DRIVE_SPEED * MAX_DRIVE_RPM;
     	ml2.set(targetSpeed);
     	mr1.set(targetSpeed);
     	ml1.set(ml2.getDeviceID());
-        mr2.set(mr1.getDeviceID());	        
+        mr2.set(mr1.getDeviceID());
+        //ml3.set(ml2.getDeviceID());
+        //mr3.set(mr1.getDeviceID());	        
         getFastPosition = mr1.getEncPosition();
     }
     
@@ -253,30 +273,37 @@ public class DriveTrain extends Subsystem {
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
     	ml2.set(-targetSpeed);
     	mr1.set(-targetSpeed);
     	ml1.set(ml2.getDeviceID());
-        mr2.set(mr1.getDeviceID());	        
+        mr2.set(mr1.getDeviceID());	   
+        //ml3.set(ml2.getDeviceID());
+        //mr3.set(mr1.getDeviceID());     
         getBackPosition = mr1.getEncPosition();
         System.out.println("Backwards");
         System.out.println(getBackPosition);
-        //getBackwardsEncPosition = -getBackPosition;
     }
     
     
     public void driveBackwardFast(){
     	mr1.set(-1.0);
     	mr2.set(-1.0);
+    	//mr3.set(-1.0);
     	ml1.set(-1.0);
     	ml2.set(-1.0);
+    	//ml3.set(-1.0);
     }
     
     public void pivotCounterClockwise(){
     	mr1.set(0);
     	mr2.set(0);
+    	//mr3.set(0);
     	ml1.set(-0.55);
     	ml2.set(-0.55);
+    	//ml3.set(-0.55);
     }
     
     public void pivotClockwise(){
@@ -289,11 +316,15 @@ public class DriveTrain extends Subsystem {
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
     	ml2.set(targetSpeed);
     	mr1.set(-targetSpeed);
     	ml1.set(ml2.getDeviceID());
-        mr2.set(mr1.getDeviceID());	        
+        mr2.set(mr1.getDeviceID());	   
+        //ml3.set(ml2.getDeviceID());
+        //mr3.set(mr1.getDeviceID());  
         getPivotPosition = mr1.getEncPosition();
         System.out.println("Turn");
         System.out.println(getPivotPosition);
@@ -303,18 +334,16 @@ public class DriveTrain extends Subsystem {
     	System.out.println("TurningRight");
     	ml1.set(0.25);
     	ml2.set(0.25);
+    	//ml3.set(0.25);
     }
     public void stopDriving(){
     	System.out.println("Stopping");
     	ml1.set(0);
     	ml2.set(0);
+    	//ml3.set(0);
     	mr1.set(0);
     	mr2.set(0);
+    	//mr3.set(0);
     }
-    
-    public void talonSetToVBus(){
-        
-    }
-    
 }
 

@@ -21,10 +21,12 @@ public class RobotMap {
 	
 	public static final int CAN_DEVICE_DRIVE_L1 = 11;//1;
 	public static final int CAN_DEVICE_DRIVE_L2 = 12;//2;
+	//public static final int CAN_DEVICE_DRIVE_L3 = 17;//3rd motor on the left side;
 	public static final int CAN_DEVICE_DRIVE_R1 = 15;//9;
 	public static final int CAN_DEVICE_DRIVE_R2 = 16;//10;
-	public static final int CAN_DEVICE_LAUNCHER_L = 14;//13,14
-	public static final int CAN_DEVICE_LAUNCHER_R = 13;//13,14
+	//public static final int CAN_DEVICE_DRIVE_R3 = 18;//3rd motor on right side;	
+	public static final int CAN_DEVICE_LAUNCHER_L = 14;//13;
+	public static final int CAN_DEVICE_LAUNCHER_R = 13;//13;
 	public static final int CAN_DEVICE_INTAKEROLLER = 10;
 	
 	public static final int CAN_SOLENOID = 21;

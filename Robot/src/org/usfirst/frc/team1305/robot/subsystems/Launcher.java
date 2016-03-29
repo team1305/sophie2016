@@ -145,7 +145,7 @@ public class Launcher extends Subsystem {
         	/* Speed mode */
         	_fly_wheel_talon_right.changeControlMode(TalonControlMode.Speed);
         	targetSpeed = _targetFlywheelPercent * MAX_LAUNCHER_RPM;
-        	SmartDashboard.putNumber("TargetSpeedCalc", targetSpeed);
+        	//SmartDashboard.putNumber("TargetSpeedCalc", targetSpeed);
         	
         	_fly_wheel_talon_right.set(targetSpeed); 
 
@@ -163,7 +163,7 @@ public class Launcher extends Subsystem {
         	/* Percent voltage mode */
         	_fly_wheel_talon_right.changeControlMode(TalonControlMode.PercentVbus);
         	_fly_wheel_talon_right.set(moveValue);
-        	SmartDashboard.putNumber("movevalue", moveValue);
+        	//SmartDashboard.putNumber("movevalue", moveValue);
         	
         }
     
@@ -176,11 +176,11 @@ public class Launcher extends Subsystem {
         _sb.setLength(0);
 
     	
-    	SmartDashboard.putNumber("Motor Output", motorOutput);
-    	SmartDashboard.putNumber("TargetSpeed", targetSpeed);
-    	SmartDashboard.putNumber("mtrspeed", mtrspeed);
-    	SmartDashboard.putNumber("Right flywheel Talon Get", _fly_wheel_talon_right.get());
-    	SmartDashboard.putNumber("Launch Delay Timer",launchDelayTimer.get());
+    	//SmartDashboard.putNumber("Motor Output", motorOutput);
+    	//SmartDashboard.putNumber("TargetSpeed", targetSpeed);
+    	//SmartDashboard.putNumber("mtrspeed", mtrspeed);
+    	//SmartDashboard.putNumber("Right flywheel Talon Get", _fly_wheel_talon_right.get());
+    	//SmartDashboard.putNumber("Launch Delay Timer",launchDelayTimer.get());
     	
     	    	
     	//launch is default command, so only turn on intake if flywheel is on
