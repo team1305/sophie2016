@@ -36,6 +36,8 @@ public class RobotMap {
 	public static final int PWM_CLIMB_MOTORS = 8;
 	public static final int PWM_CLAW_MOTOR = 9;
 	
+	public static final int DIO_BALLSENSOR = 9;
+	
 	public static final double 
 		driveTrainEncoderDistancePerPulse  = 6 * Math.PI / 2048;
 

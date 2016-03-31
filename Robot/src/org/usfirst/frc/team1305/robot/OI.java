@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1305.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -152,5 +152,18 @@ public class OI {
 	    public Joystick getDriveContoller(){
 	    	return driveController;
 	    }
+	    public void rumbleHighDriveController(double mag){
+	    	driveController.setRumble(RumbleType.kRightRumble, (float) mag);
+	    }
+	    public void rumbleLowDriveController(double mag){
+	    	driveController.setRumble(RumbleType.kLeftRumble, (float) mag);
+	    }
+	    public void rumbleHighBallController(double mag){
+	    	ballController.setRumble(RumbleType.kRightRumble, (float) mag);
+	    }
+	    public void rumbleLowBallController(double mag){
+	    	ballController.setRumble(RumbleType.kLeftRumble, (float) mag);
+	    }
 }
+
 

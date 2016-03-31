@@ -345,5 +345,9 @@ public class DriveTrain extends Subsystem {
     	mr2.set(0);
     	//mr3.set(0);
     }
+    public double getDriveAmps(){
+    	double sum = mr1.getOutputCurrent() + mr2.getOutputCurrent() + ml1.getOutputCurrent() + ml2.getOutputCurrent();
+    	return Math.abs(sum) / 4.0;
+    }
 }
 

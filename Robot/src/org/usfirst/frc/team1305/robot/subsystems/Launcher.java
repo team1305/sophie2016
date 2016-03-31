@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,6 +27,8 @@ public class Launcher extends Subsystem {
 	private Timer launchDelayTimer = new Timer();
 	private Timer retractIntakeTimer = new Timer();
 	private double LAUNCH_DELAY_SECONDS = 2.6;
+	private double intakeForwards = 1;
+	private double intakeBackwards = -1;
 	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
 	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
 	private double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
@@ -39,6 +42,7 @@ public class Launcher extends Subsystem {
 	private CANTalon _fly_wheel_talon_right = new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_R);
 	private CANTalon _fly_wheel_talon_left= new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_L);
 	private Solenoid Intake_Slide = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_SLIDER);
+	private DigitalInput ballSensor = new DigitalInput(RobotMap.DIO_BALLSENSOR);
 	
 	double targetSpeed ;
 	double _throttleBeforeLockin;
@@ -102,7 +106,7 @@ public class Launcher extends Subsystem {
     }
     
     public void ExtendIntake(){
-		Intake_Talon.set(1);
+		Intake_Talon.set(intakeForwards);
 		Intake_Slide.set(true);
 		retractIntakeTimer.reset();
 		
@@ -110,7 +114,7 @@ public class Launcher extends Subsystem {
 	}
     public void LowGoal(){
 
-    		Intake_Talon.set(-1);
+    		Intake_Talon.set(intakeBackwards);
     		_fly_wheel_talon_right.changeControlMode(TalonControlMode.PercentVbus);
         	_fly_wheel_talon_right.set(FLY_WHEEL_LOW_GOAL_SPEED);
         	//_fly_wheel_talon_left.set(_fly_wheel_talon_right.get());
@@ -216,7 +220,7 @@ public class Launcher extends Subsystem {
     	{
 	    	if (isAutoLaunch && launchDelayTimer.get() > LAUNCH_DELAY_SECONDS) {
 	    		//feed the ball to the launcher flywheel
-	    		Intake_Talon.set(1);
+	    		Intake_Talon.set(intakeForwards);
 	    	}
     	}
     	
@@ -226,15 +230,21 @@ public class Launcher extends Subsystem {
     	return isOnTarget;
     }
     public void ShootNow(){
-    		Intake_Talon.set(1);
+    		Intake_Talon.set(intakeForwards);
 	}
     
     public void SpitOut(){
-    	Intake_Talon.set(-1);
+    	Intake_Talon.set(intakeBackwards);
     }
     
     public void StopIntake(){
     	Intake_Talon.set(0);
     }
+    
+    public boolean getBallSensor(){
+    	return ballSensor.get();
+    }
 }
+
+
 

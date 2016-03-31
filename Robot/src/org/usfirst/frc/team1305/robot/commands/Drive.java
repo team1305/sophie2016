@@ -29,6 +29,7 @@ public class Drive extends Command {
         	double YR = Robot.oi.getDriveYR();
         	//apply stick values to the arcadedrive function
         	Robot.drivetrain.arcadeDrive(XL, YR);
+        	Robot.oi.rumbleLowDriveController(Robot.drivetrain.getDriveAmps() / 30.0);
 //    	}
 
 	}
@@ -40,11 +41,13 @@ public class Drive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.oi.rumbleLowDriveController(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.oi.rumbleLowDriveController(0.0);
     }
 
 	public static void toggleSmoothing() {
