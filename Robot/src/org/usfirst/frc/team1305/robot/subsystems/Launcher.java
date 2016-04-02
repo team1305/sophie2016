@@ -5,7 +5,6 @@ import org.usfirst.frc.team1305.robot.RobotMap;
 import org.usfirst.frc.team1305.robot.commands.LaunchHighGoal;
 
 import edu.wpi.first.wpilibj.CANTalon;
-//import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -72,7 +71,6 @@ public class Launcher extends Subsystem {
         launchDelayTimer.start();
         retractIntakeTimer.start();
         //prefs = Preferences.getInstance();
-       // _targetFlywheelPercent = prefs.getDouble(KEY_PREFS_TARGET_FLYWHEEL_PERCENT, 40)/100;
         
         //set the right motor to same setting as left
         _fly_wheel_talon_left.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -95,12 +93,10 @@ public class Launcher extends Subsystem {
     	if (this.isLockedIn)
     	{
     		this.isLockedIn = false;
-    		//this.lockSpeed = SmartDashboard.getNumber("LauncherSpeed", 1.0);
     	}
     	else
     	{
     		this.isLockedIn = true;
-    		//this.lockSpeed = 14000; //mtrspeed;
     	}
     	SmartDashboard.putBoolean("LauncherLockedIn", isLockedIn);
     }
@@ -110,7 +106,7 @@ public class Launcher extends Subsystem {
 		Intake_Slide.set(true);
 		retractIntakeTimer.reset();
 		
-		SmartDashboard.putBoolean("Intake", Intake_Slide.get());
+		//SmartDashboard.putBoolean("Intake", Intake_Slide.get());
 	}
     public void LowGoal(){
 
@@ -138,10 +134,6 @@ public class Launcher extends Subsystem {
     	
     	motorOutput = _fly_wheel_talon_right.getOutputVoltage() / _fly_wheel_talon_right.getBusVoltage();
     	/* prepare line to print */
-		_sb.append("\tout:");
-		_sb.append(motorOutput);
-        _sb.append("\tspd:");
-        _sb.append(_fly_wheel_talon_right.getSpeed() );
         mtrspeed = _fly_wheel_talon_right.getSpeed();
         
         if(isLockedIn)
@@ -149,15 +141,9 @@ public class Launcher extends Subsystem {
         	/* Speed mode */
         	_fly_wheel_talon_right.changeControlMode(TalonControlMode.Speed);
         	targetSpeed = _targetFlywheelPercent * MAX_LAUNCHER_RPM;
-        	//SmartDashboard.putNumber("TargetSpeedCalc", targetSpeed);
         	
         	_fly_wheel_talon_right.set(targetSpeed); 
 
-        	/* append more signals to print when in speed mode. */
-            _sb.append("\terr:");
-            _sb.append(_fly_wheel_talon_right.getClosedLoopError());
-            _sb.append("\ttrg:");
-            _sb.append(targetSpeed);
             if(Math.abs(_fly_wheel_talon_right.getSpeed() - 4020) < 50)
             	isOnTarget = true;
             else
@@ -167,24 +153,7 @@ public class Launcher extends Subsystem {
         	/* Percent voltage mode */
         	_fly_wheel_talon_right.changeControlMode(TalonControlMode.PercentVbus);
         	_fly_wheel_talon_right.set(moveValue);
-        	//SmartDashboard.putNumber("movevalue", moveValue);
-        	
         }
-    
-        
-        
-        if(++_loops >= 10) {
-        	_loops = 0;
-        	System.out.println(_sb.toString());
-        }
-        _sb.setLength(0);
-
-    	
-    	//SmartDashboard.putNumber("Motor Output", motorOutput);
-    	//SmartDashboard.putNumber("TargetSpeed", targetSpeed);
-    	//SmartDashboard.putNumber("mtrspeed", mtrspeed);
-    	//SmartDashboard.putNumber("Right flywheel Talon Get", _fly_wheel_talon_right.get());
-    	//SmartDashboard.putNumber("Launch Delay Timer",launchDelayTimer.get());
     	
     	    	
     	//launch is default command, so only turn on intake if flywheel is on

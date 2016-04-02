@@ -24,7 +24,8 @@ public class RobotMap {
 	//public static final int CAN_DEVICE_DRIVE_L3 = 17;//3rd motor on the left side;
 	public static final int CAN_DEVICE_DRIVE_R1 = 15;//9;
 	public static final int CAN_DEVICE_DRIVE_R2 = 16;//10;
-	//public static final int CAN_DEVICE_DRIVE_R3 = 18;//3rd motor on right side;	
+	//public static final int CAN_DEVICE_DRIVE_R3 = 18;//3rd motor on right side;
+	
 	public static final int CAN_DEVICE_LAUNCHER_L = 14;//13;
 	public static final int CAN_DEVICE_LAUNCHER_R = 13;//13;
 	public static final int CAN_DEVICE_INTAKEROLLER = 10;
@@ -37,9 +38,7 @@ public class RobotMap {
 	public static final int PWM_CLAW_MOTOR = 9;
 	
 	public static final int DIO_BALLSENSOR = 9;
-	
-	public static final double 
-		driveTrainEncoderDistancePerPulse  = 6 * Math.PI / 2048;
+
 
 		
 	

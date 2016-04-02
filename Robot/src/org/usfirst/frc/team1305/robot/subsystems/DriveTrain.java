@@ -19,133 +19,119 @@ public class DriveTrain extends Subsystem {
 	
 	CANTalon ml1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L1);
 	CANTalon ml2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L2);
-	//CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3);
+	//CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3); //MTR3
 	CANTalon mr1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R1);
 	CANTalon mr2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R2);
-	//CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3);
+	//CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3); //MTR3
 	
 	CANTalon leftEncoder = ml2;
 	CANTalon rightEncode = mr1;
 	
 	private boolean armPerspective = false;
 	public 	boolean isLowGear = false;
-	private double driveScalingFactor = 1; 
-	private double rotateScalingFactor = 1; //1.2; //1.4;
-	private double lowGearScalingFactor = .66;
 	private boolean isDriveSmoothing = true;
+	
+	private double driveScalingFactor = 1; 
+	private double rotateScalingFactor = 1;
+	private double lowGearScalingFactor = .66;
 	private double SLOW_DRIVE_SPEED = 0.03;
 	private double FAST_DRIVE_SPEED = 1;
-	private int MAX_DRIVE_RPM = 6200;
-	double targetSpeed;
-	public int getPosition;
-	private int isgetPosition;
-	public int setPosition;
-	public int getPivotPosition;
-	private int isPivotPosition;
-	public int getFastPosition;
-	private int isFastPosition;
-
-	public int getBackPosition;
-	private int isBackPosition;
+	private double targetSpeed;
 	
-	public int getBackwardsEncPosition;
+	private int MAX_DRIVE_RPM = 6200;
+	private int isGetPosition;
+	private int isPivotPosition;
+	private int isFastPosition;
+	private int isBackPosition;
 	private int currentBackwardsEncPosition;
 	
+	public int getPosition;
+	public int setPosition;
+	public int getPivotPosition;
+	public int getFastPosition;
+	public int getBackPosition;
+	public int getBackwardsEncPosition;
 	
 	private RobotDrive drive1 = new RobotDrive(ml1, ml2, mr1, mr2);
-	//private RobotDrive drive1 = new RobotDrive(ml1, ml2, ml3, mr1, mr2, mr3); //for 6 drive motors
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	//private RobotDrive drive1 = new RobotDrive(ml1, ml2, ml3, mr1, mr2, mr3); //MTR3
 
-    public void initDefaultCommand() {
+    public void initDefaultCommand()
+    {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new Drive());
     }
     
     public DriveTrain()
     {
-    	
-    	
     	leftEncoder.reverseSensor(false);
     	rightEncode.reverseSensor(true);
     	
     	getPosition = mr1.getEncPosition();
     	getPivotPosition = mr1.getEncPosition();
-    	isgetPosition = getPosition;
+    	getBackwardsEncPosition = mr1.getEncPosition();
+    	
+    	isGetPosition = getPosition;
     	isPivotPosition = getPosition;
     	isFastPosition = getPosition;
     	isBackPosition = getPosition;
-    	
-    	getBackwardsEncPosition = mr1.getEncPosition();
     	currentBackwardsEncPosition = getBackwardsEncPosition;
     	
     	ml2.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
         ml2.reverseSensor(false);
 
-        /* set the peak and nominal outputs, 12V means full */
         ml2.configNominalOutputVoltage(+0.0f, -0.0f);
-        ml2.configPeakOutputVoltage(+12.0f, -12.0f); //Launcher only positive spin 
-        /* set closed loop gains in slot0 */
+        ml2.configPeakOutputVoltage(+12.0f, -12.0f);
         ml2.setProfile(0);
-        ml2.setF(0.1097);//0.1097);
-        ml2.setP(0.15);//.22);
+        ml2.setF(0.1097);
+        ml2.setP(0.15);
         ml2.setI(0); 
         ml2.setD(0);
         
         mr1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
         mr1.reverseSensor(true);
 
-        /* set the peak and nominal outputs, 12V means full */
         mr1.configNominalOutputVoltage(+0.0f, -0.0f);
-        mr1.configPeakOutputVoltage(+12.0f, -12.0f); //Launcher only positive spin 
-        /* set closed loop gains in slot0 */
+        mr1.configPeakOutputVoltage(+12.0f, -12.0f); 
         mr1.setProfile(0);
-        mr1.setF(0.1097);//0.1097);
-        mr1.setP(0.15);//.22);
+        mr1.setF(0.1097);
+        mr1.setP(0.15);
         mr1.setI(0); 
         mr1.setD(0);
 
 	}
     
-    /**
-     * Toggles digital low gear on/off.
-     * Triggered through ToggleGear function,
-     * values are held in tankDrive method.
-     */
-    public void toggleGear(){
+    public void toggleGear()
+    {
     	this.isLowGear = ! this.isLowGear;
     }
-    public void toggleDriveSmoothing(){
+    
+    public void toggleDriveSmoothing()
+    {
     	this.isDriveSmoothing = ! this.isDriveSmoothing;
     	SmartDashboard.putBoolean("DriveSmoothing", isDriveSmoothing);
     }
     
-    
-    /**
-     * Handles manual driving when smooth drive is not active.
-     * @param moveValue Y-value of joystick passed to method.
-     * @param rotateValue X-value of joystick passed to method.
-     */
-    public void arcadeDrive(double moveValue, double rotateValue){
-    	//check for low gear
-    	if (mr1.getControlMode() != TalonControlMode.PercentVbus){
+    public void arcadeDrive(double moveValue, double rotateValue)
+    {
+    	if (mr1.getControlMode() != TalonControlMode.PercentVbus)
+    	{
     		ml2.changeControlMode(TalonControlMode.PercentVbus);
         	mr1.changeControlMode(TalonControlMode.PercentVbus);
         	mr2.changeControlMode(TalonControlMode.PercentVbus);
             ml1.changeControlMode(TalonControlMode.PercentVbus);
-            //ml3.changeControlMode(TalonControlMode.PercentVbus);
-            //mr3.changeControlMode(TalonControlMode.PercentVbus);
+            //ml3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
+            //mr3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
     	}
     	
-    	if(isLowGear){
+    	if(isLowGear)
+    	{
     		moveValue *= lowGearScalingFactor;
     		rotateValue *= lowGearScalingFactor;
     	}
     	
-    	if(isDriveSmoothing){
+    	if(isDriveSmoothing)
+    	{
     		this.setRampRate(120);
-    		
     	}
     	else
     	{
@@ -153,11 +139,13 @@ public class DriveTrain extends Subsystem {
     	}
     	
     	//check perspective and apply
-    	if(armPerspective){
+    	if(armPerspective)
+    	{
     		drive1.arcadeDrive(-moveValue * driveScalingFactor, rotateValue * rotateScalingFactor);
     		
     	}
-    	else{
+    	else
+    	{
     		drive1.arcadeDrive(moveValue * driveScalingFactor, rotateValue * rotateScalingFactor);
     	}
     }
@@ -171,34 +159,39 @@ public class DriveTrain extends Subsystem {
      * @param leftValue Handles left base movement of robot.
      * @param rightValue Handles right base movement of robot.
      */
-    public void tankDrive(double leftValue, double rightValue){
+    public void tankDrive(double leftValue, double rightValue)
+    {
     	if (mr1.getControlMode() != TalonControlMode.PercentVbus){
     		ml2.changeControlMode(TalonControlMode.PercentVbus);
         	mr1.changeControlMode(TalonControlMode.PercentVbus);
         	mr2.changeControlMode(TalonControlMode.PercentVbus);
             ml1.changeControlMode(TalonControlMode.PercentVbus);
-            //ml3.changeControlMode(TalonControlMode.PercentVbus);
-            //mr3.changeControlMode(TalonControlMode.PercentVbus);
+            //ml3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
+            //mr3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
     	}
     	
-    	if(isLowGear){
+    	if(isLowGear)
+    	{
     		leftValue /= 1.6;
     		rightValue /= 1.6;
     	}
-    	if(armPerspective){
+    	if(armPerspective)
+    	{
         	drive1.tankDrive(-rightValue/1.3, -leftValue/1.3);
     	}
-    	else{
+    	else
+    	{
         	drive1.tankDrive(leftValue/1.3, rightValue/1.3);
     	}
     }
-    private void setRampRate(double rampRate){
+    private void setRampRate(double rampRate)
+    {
     	ml1.setVoltageRampRate(rampRate);
     	mr1.setVoltageRampRate(rampRate);
     	ml2.setVoltageRampRate(rampRate);
     	mr2.setVoltageRampRate(rampRate);
-    	//ml3.setVoltageRampRate(rampRate);
-    	//mr3.setVoltageRampRate(rampRate);
+    	//ml3.setVoltageRampRate(rampRate); //MTR3
+    	//mr3.setVoltageRampRate(rampRate); //MTR3
     	
     }
     
@@ -210,37 +203,40 @@ public class DriveTrain extends Subsystem {
     
     public double getDistance()
     {
-    	System.out.println("encoderPos" + (leftEncoder.getEncPosition() + rightEncode.getEncPosition())/2);
     	return (ml2.getEncPosition() + mr1.getEncPosition())/2;
     }
     
-    public void driveForwardSlow(){
-    	if (Math.abs(isgetPosition) > 0){
+    public void driveForwardSlow()
+    {
+    	if (Math.abs(isGetPosition) > 0)
+    	{
     		mr1.setEncPosition(0);
     		getPosition = mr1.getEncPosition();
-    		isgetPosition = 0;
+    		isGetPosition = 0;
     	}
+    	
     	ml2.changeControlMode(TalonControlMode.Speed);
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
         
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
     	ml2.set(targetSpeed);
     	mr1.set(targetSpeed);
     	ml1.set(ml2.getDeviceID());
         mr2.set(mr1.getDeviceID());
-        //ml3.set(ml2.getDeviceID());
-        //mr3.set(mr1.getDeviceID());	 
-        getPosition = mr1.getEncPosition();
-
+        //ml3.set(ml2.getDeviceID()); //MTR3
+        //mr3.set(mr1.getDeviceID()); //MTR3
         
+        getPosition = mr1.getEncPosition();
     }
     
-    public void driveForwardFast(){
-    	if (Math.abs(isFastPosition) > 0){
+    public void driveForwardFast()
+    {
+    	if (Math.abs(isFastPosition) > 0)
+    	{
     		mr1.setEncPosition(0);
     		getPosition = mr1.getEncPosition();
     		isFastPosition = 0;
@@ -249,10 +245,11 @@ public class DriveTrain extends Subsystem {
     	mr1.changeControlMode(TalonControlMode.Speed);
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
         
     	targetSpeed = FAST_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	
     	ml2.set(targetSpeed);
     	mr1.set(targetSpeed);
     	ml1.set(ml2.getDeviceID());
@@ -262,90 +259,105 @@ public class DriveTrain extends Subsystem {
         getFastPosition = mr1.getEncPosition();
     }
     
-    public void driveBackwardsSlow2(){
-    	if (Math.abs(isBackPosition) != 0){
+    public void driveBackwardsSlow2()
+    {
+    	if (Math.abs(isBackPosition) != 0)
+    	{
     		mr1.setEncPosition(0);
     		getBackPosition = mr1.getEncPosition();
     		isBackPosition = 0;
     	}
+    	
     	mr1.reverseSensor(true);
+    	
     	ml2.changeControlMode(TalonControlMode.Speed);
     	mr1.changeControlMode(TalonControlMode.Speed);
+    	
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
         //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
         //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	
     	ml2.set(-targetSpeed);
     	mr1.set(-targetSpeed);
+    	
     	ml1.set(ml2.getDeviceID());
         mr2.set(mr1.getDeviceID());	   
-        //ml3.set(ml2.getDeviceID());
-        //mr3.set(mr1.getDeviceID());     
+        //ml3.set(ml2.getDeviceID()); //MTR3
+        //mr3.set(mr1.getDeviceID()); //MTR3
+        
         getBackPosition = mr1.getEncPosition();
-        System.out.println("Backwards");
-        System.out.println(getBackPosition);
     }
     
-    
-    public void driveBackwardFast(){
+    public void driveBackwardFast()
+    {
     	mr1.set(-1.0);
     	mr2.set(-1.0);
-    	//mr3.set(-1.0);
+    	//mr3.set(-1.0); //MTR3
     	ml1.set(-1.0);
     	ml2.set(-1.0);
-    	//ml3.set(-1.0);
+    	//ml3.set(-1.0); //MTR3
     }
     
-    public void pivotCounterClockwise(){
+    public void pivotCounterClockwise()
+    {
     	mr1.set(0);
     	mr2.set(0);
-    	//mr3.set(0);
+    	//mr3.set(0); //MTR3
     	ml1.set(-0.55);
     	ml2.set(-0.55);
-    	//ml3.set(-0.55);
+    	//ml3.set(-0.55); //MTR3
     }
     
-    public void pivotClockwise(){
-    	if (Math.abs(isPivotPosition) != 0){
+    public void pivotClockwise()
+    {
+    	if (Math.abs(isPivotPosition) != 0)
+    	{
     		mr1.setEncPosition(0);
     		getPivotPosition = mr1.getEncPosition();
     		isPivotPosition = 0;
     	}
+    	
     	ml2.changeControlMode(TalonControlMode.Speed);
     	mr1.changeControlMode(TalonControlMode.Speed);
+    	
         mr2.changeControlMode(CANTalon.TalonControlMode.Follower);
         ml1.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
-        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //mr3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
+        //ml3.changeControlMode(CANTalon.TalonControlMode.Follower); //MTR3
+        
     	targetSpeed = SLOW_DRIVE_SPEED * MAX_DRIVE_RPM;
+    	
     	ml2.set(targetSpeed);
     	mr1.set(-targetSpeed);
+    	
     	ml1.set(ml2.getDeviceID());
         mr2.set(mr1.getDeviceID());	   
-        //ml3.set(ml2.getDeviceID());
-        //mr3.set(mr1.getDeviceID());  
+        //ml3.set(ml2.getDeviceID()); //MTR3
+        //mr3.set(mr1.getDeviceID());  //MTR3 
+        
         getPivotPosition = mr1.getEncPosition();
-        System.out.println("Turn");
-        System.out.println(getPivotPosition);
     }
     
-    public void turnRight(){
-    	System.out.println("TurningRight");
+    public void turnRight()
+    {
     	ml1.set(0.25);
     	ml2.set(0.25);
-    	//ml3.set(0.25);
+    	//ml3.set(0.25); //MTR3
     }
-    public void stopDriving(){
-    	System.out.println("Stopping");
+    public void stopDriving()
+    {
     	ml1.set(0);
     	ml2.set(0);
-    	//ml3.set(0);
+    	//ml3.set(0); //MTR3
     	mr1.set(0);
     	mr2.set(0);
-    	//mr3.set(0);
+    	//mr3.set(0); //MTR3
     }
-    public double getDriveAmps(){
+    public double getDriveAmps()
+    {
     	double sum = mr1.getOutputCurrent() + mr2.getOutputCurrent() + ml1.getOutputCurrent() + ml2.getOutputCurrent();
     	return Math.abs(sum) / 4.0;
     }

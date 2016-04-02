@@ -29,13 +29,13 @@ public class TheArm extends Subsystem {
     public void extendArm(){
     	Arm_Actuator.set(true);
     	this.isarmPos = true;
-    	SmartDashboard.putBoolean("Arm Out", Arm_Actuator.get());
+    	SmartDashboard.putBoolean("Arm Active", isarmPos);
     }
     
     public void retractArm(){
     	Arm_Actuator.set(false);
 		this.isarmPos = false;
-		SmartDashboard.putBoolean("Arm Out", Arm_Actuator.get());
+		SmartDashboard.putBoolean("Arm Active", isarmPos);
 	}
     
     public void AutonomousArm(){
