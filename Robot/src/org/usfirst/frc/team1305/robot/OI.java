@@ -1,16 +1,17 @@
 package org.usfirst.frc.team1305.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
 //import org.usfirst.frc.team1305.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1305.robot.commands.ToggleGear;
 import org.usfirst.frc.team1305.robot.commands.ToggleLauncherLockin;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
 import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
 import org.usfirst.frc.team1305.robot.commands.ShootNow;
+import org.usfirst.frc.team1305.robot.commands.ToggleCamera;
 import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
 import org.usfirst.frc.team1305.robot.commands.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
@@ -64,6 +65,7 @@ public class OI {
 	private final Button toggleGear = new JoystickButton(driveController, 6);
 	private final Button extendArm = new JoystickButton(driveController, 5);
 	private final Button toggleDriveSmoothing = new JoystickButton(driveController, 9);
+	private final Button toggleCam = new JoystickButton(driveController, 7);
 	
 
 	
@@ -85,6 +87,7 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
+			toggleCam.whenReleased(new ToggleCamera());
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());

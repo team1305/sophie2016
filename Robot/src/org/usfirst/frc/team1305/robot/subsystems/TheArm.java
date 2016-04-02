@@ -3,10 +3,7 @@ package org.usfirst.frc.team1305.robot.subsystems;
 
 import org.usfirst.frc.team1305.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1305.robot.commands.RetractArm;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
