@@ -21,7 +21,7 @@ public class Camera extends Subsystem {
         //the camera name (ex "cam0") can be found through the roborio web interface
         if(!isBackCam){
         	//front cam
-            server.startAutomaticCapture("cam3");
+            server.startAutomaticCapture("cam2");
         }else
         	//back cam
             server.startAutomaticCapture("cam0");
