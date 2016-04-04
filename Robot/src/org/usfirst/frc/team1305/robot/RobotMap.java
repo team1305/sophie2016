@@ -33,10 +33,11 @@ public class RobotMap {
 	public static final int CAN_SOLENOID = 21;
 	public static final int SOLENOID_CH_SLIDER = 0;
 	public static final int SOLENOID_CH_ARM = 1;
+	public static final int SOLENOID_CH_BREAKS = 2;
 	
 	public static final int PWM_CLIMB_MOTORS = 8;
 	public static final int PWM_CLAW_MOTOR = 9;
-	
+
 	public static final int DIO_BALLSENSOR = 9;
 
 

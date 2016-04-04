@@ -17,7 +17,7 @@ public class Camera extends Subsystem {
     CameraServer server;
 
 	
-	public Camera(int a)
+	public Camera()
 	{
 		server = CameraServer.getInstance();
         server.setQuality(30);

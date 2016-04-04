@@ -11,6 +11,7 @@ import org.usfirst.frc.team1305.robot.commands.ToggleLauncherLockin;
 import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
 import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
 import org.usfirst.frc.team1305.robot.commands.ShootNow;
+import org.usfirst.frc.team1305.robot.commands.ToggleBreaks;
 import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
 import org.usfirst.frc.team1305.robot.commands.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
@@ -73,6 +74,7 @@ public class OI {
 	private final Button launchLowGoal = new JoystickButton(ballController, 2);//7
 	private final Button extendIntake = new JoystickButton(ballController, 1);//8
 	private final Button shootNow = new JoystickButton(ballController,  6);
+	private final Button toggleBreaks = new JoystickButton(ballController, 7);
 	
 	
 	private final boolean invertDriveStick = false;
@@ -88,6 +90,7 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
+			toggleBreaks.whenPressed(new ToggleBreaks());
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());

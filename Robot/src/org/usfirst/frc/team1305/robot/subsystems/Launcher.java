@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Launcher extends Subsystem {
 	
 	private boolean isLockedIn = false;
+	private boolean isBreakOn = false;
 	//private double lockSpeed = 0;
 	private double FLY_WHEEL_LOW_GOAL_SPEED = -1;
 	private double mtrspeed;
@@ -41,6 +42,7 @@ public class Launcher extends Subsystem {
 	private CANTalon _fly_wheel_talon_right = new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_R);
 	private CANTalon _fly_wheel_talon_left= new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_L);
 	private Solenoid Intake_Slide = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_SLIDER);
+	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BREAKS);
 	private DigitalInput ballSensor = new DigitalInput(RobotMap.DIO_BALLSENSOR);
 	
 	double targetSpeed ;
@@ -89,6 +91,18 @@ public class Launcher extends Subsystem {
      * values are held in tankDrive method.
      */
 
+    public void toggleBreaks()
+    {
+    	this.isBreakOn = ! this.isBreakOn;
+    }
+    
+    public void LaunchBreaks(){
+    	if(isBreakOn){
+    		Launch_Breaks.set(true);
+    		SmartDashboard.putBoolean("Launch Breaks On", isBreakOn);
+    	}
+    }
+    
     public void toggleLockin(){
     	if (this.isLockedIn)
     	{
@@ -190,6 +204,11 @@ public class Launcher extends Subsystem {
 	    	if (isAutoLaunch && launchDelayTimer.get() > LAUNCH_DELAY_SECONDS) {
 	    		//feed the ball to the launcher flywheel
 	    		Intake_Talon.set(intakeForwards);
+	    		if (isBreakOn){
+	    			isBreakOn = false;
+	    			Launch_Breaks.set(false);
+	    			SmartDashboard.putBoolean("Launch Breaks On", isBreakOn);
+	    		}
 	    	}
     	}
     	
