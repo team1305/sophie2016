@@ -19,10 +19,10 @@ public class DriveTrain extends Subsystem {
 	
 	CANTalon ml1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L1);
 	CANTalon ml2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L2);
-	//CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3); //MTR3
+	CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3); //MTR3
 	CANTalon mr1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R1);
 	CANTalon mr2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R2);
-	//CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3); //MTR3
+	CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3); //MTR3
 	
 	CANTalon leftEncoder = ml2;
 	CANTalon rightEncode = mr1;
@@ -53,7 +53,9 @@ public class DriveTrain extends Subsystem {
 	public int getBackwardsEncPosition;
 	
 	private RobotDrive drive1 = new RobotDrive(ml1, ml2, mr1, mr2);
-	//private RobotDrive drive1 = new RobotDrive(ml1, ml2, ml3, mr1, mr2, mr3); //MTR3
+	
+	
+	
 
     public void initDefaultCommand()
     {
@@ -97,6 +99,12 @@ public class DriveTrain extends Subsystem {
         mr1.setP(0.15);
         mr1.setI(0); 
         mr1.setD(0);
+        
+        mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        mr3.set(mr1.getDeviceID());
+        ml3.set(ml1.getDeviceID());
+
 
 	}
     

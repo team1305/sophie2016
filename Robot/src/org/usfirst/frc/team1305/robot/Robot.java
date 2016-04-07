@@ -22,6 +22,7 @@ import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
+import org.usfirst.frc.team1305.robot.subsystems.Brakes;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
 import org.usfirst.frc.team1305.robot.subsystems.Climber;
 
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
 	public static final Camera camera = new Camera(1);
 	public static final TheArm arm = new TheArm();
 	public static final Climber climber = new Climber();
+	public static final Brakes brakes = new Brakes();
 	
     //Command autonomousCommand;
 

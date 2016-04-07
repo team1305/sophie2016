@@ -12,6 +12,9 @@ import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
 import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
 import org.usfirst.frc.team1305.robot.commands.ShootNow;
 import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
+import org.usfirst.frc.team1305.robot.commands.BrakesDeploy;
+import org.usfirst.frc.team1305.robot.commands.BrakesRetract;
+import org.usfirst.frc.team1305.robot.commands.BrakesToggle;
 import org.usfirst.frc.team1305.robot.commands.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
 
@@ -67,6 +70,9 @@ public class OI {
 	//private final Button climberup = new JoystickButton(driveController, 1);
 	//private final Button climberdown = new JoystickButton(driveController, 4);
 	//private final Button tiltout = new JoystickButton(driveController, 2);
+	private final Button brakeDeploy = new JoystickButton(driveController, 1);
+	private final Button brakeRetract = new JoystickButton(driveController, 2);
+
 
 	
 	private final Button toggleLauncherLockin = new JoystickButton(ballController, 5);
@@ -88,6 +94,10 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
+			brakeDeploy.whenPressed(new BrakesDeploy());
+			brakeRetract.whenPressed(new BrakesRetract());
+			
+			
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());
