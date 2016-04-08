@@ -22,10 +22,10 @@ public class Brakes extends Subsystem {
     	setDefaultCommand(new BrakesRetract());
     }
     public void deploy(){
-    	this.s.set(true);
+    	this.s.set(false);
     }
     public void retract(){
-    	this.s.set(false);
+    	this.s.set(true);
     }
 	public void toggle() {
 		this.s.set(!this.s.get());
