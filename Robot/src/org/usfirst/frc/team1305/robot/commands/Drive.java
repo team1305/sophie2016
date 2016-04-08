@@ -29,7 +29,7 @@ public class Drive extends Command {
         	double YR = Robot.oi.getDriveYR();
         	//apply stick values to the arcadedrive function
         	Robot.drivetrain.arcadeDrive(XL, YR);
-        	Robot.oi.rumbleLowDriveController(Robot.drivetrain.getDriveAmps() / 30.0);
+//        	Robot.oi.rumbleLowDriveController(Robot.drivetrain.getDriveAmps() / 30.0);
 //    	}
 
 	}

@@ -21,12 +21,12 @@ public class Launcher extends Subsystem {
 	
 	private boolean isLockedIn = false;
 	//private double lockSpeed = 0;
-	private double FLY_WHEEL_LOW_GOAL_SPEED = -1;
+	private double FLY_WHEEL_LOW_GOAL_SPEED = -0.5;
 	private double mtrspeed;
 	private Timer launchDelayTimer = new Timer();
 	private Timer retractIntakeTimer = new Timer();
 	private double LAUNCH_DELAY_SECONDS = 2.6;
-	private double intakeForwards = 1;
+	private double intakeForwards = 0.9;
 	private double intakeBackwards = -1;
 	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
 	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
