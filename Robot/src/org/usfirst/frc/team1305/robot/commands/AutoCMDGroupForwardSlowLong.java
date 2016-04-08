@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoCMDGroupForwardSlowLong extends CommandGroup {
     
     public  AutoCMDGroupForwardSlowLong() {
-    	addSequential(new AutoMoveSlowToPosition(100));
+    	addSequential(new AutoMoveSlowToPosition(125));
     	addSequential(new StopDriving());
     }
 }

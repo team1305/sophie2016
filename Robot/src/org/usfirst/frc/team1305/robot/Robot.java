@@ -18,6 +18,7 @@ import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupLowGoal;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupPortculis;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupRotateClockwise;
 import org.usfirst.frc.team1305.robot.commands.AutoNothing;
+import org.usfirst.frc.team1305.robot.commands.AutoPortCullis;
 import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
@@ -71,17 +72,22 @@ public class Robot extends IterativeRobot {
         AutoChooser.addObject("Portculis", new AutoCMDGroupPortculis());
         AutoChooser.addObject("Rotate Clockwise", new AutoCMDGroupRotateClockwise());
         AutoChooser.addObject("Drive Backwards", new AutoCMDGroupDriveBackwards());
+        AutoChooser.addObject("PortCullis drive", new AutoPortCullis());
         SmartDashboard.putData("Auto Mode:", AutoChooser);
     }
 	
 	public void disabledPeriodic() {
+		AutonomousCommand = (Command) AutoChooser.getSelected();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	if (AutonomousCommand != null) {
     	AutonomousCommand = (Command) AutoChooser.getSelected();
+    	if (AutonomousCommand != null) {
     	AutonomousCommand.start();
+    	}else{
+    		AutonomousCommand = new AutoCMDGroupForwardLong();
+    		AutonomousCommand.start();
     	}
     	//ks 2016-03-06 trialAutonomousCommand.start();
     }
