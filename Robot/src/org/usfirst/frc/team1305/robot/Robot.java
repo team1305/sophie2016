@@ -62,11 +62,11 @@ public class Robot extends IterativeRobot {
 		AutonomousCommand = new AutonomousStub();
         //driveController = oi.getDriveContoller();
         AutoChooser = new SendableChooser();
-        AutoChooser.addDefault("Do Nothing", new AutoNothing());
+        AutoChooser.addObject("Do Nothing", new AutoNothing());
         AutoChooser.addObject("High Goal 'Steph Cury'", new AutoCMDGroupHighGoal());
         AutoChooser.addObject("Low Goal", new AutoCMDGroupLowGoal());
         AutoChooser.addObject("Forward Short (Slow)", new AutoCMDGroupForwardShort());
-        AutoChooser.addObject("Forward Long (Slow)", new AutoCMDGroupForwardSlowLong());
+        AutoChooser.addDefault("Forward Long (Slow)", new AutoCMDGroupForwardSlowLong()); // default auto
         AutoChooser.addObject("Forward Long (Fast)", new AutoCMDGroupForwardLong());
         AutoChooser.addObject("Chevel de Frise", new AutoCMDGroupChevelDeFrise());
         AutoChooser.addObject("Portculis", new AutoCMDGroupPortculis());
