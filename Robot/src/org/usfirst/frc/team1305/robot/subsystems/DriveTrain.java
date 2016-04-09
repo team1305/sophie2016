@@ -111,7 +111,8 @@ public class DriveTrain extends Subsystem {
      * @return left wheel distance, inches
      */
     public double getLeftEncPosition(){
-    	return Math.abs(leftEncoder.getPosition())/136*100000;
+//    	return (leftEncoder.getPosition())/136*100000;
+    	return leftEncoder.getPosition();
     }
     
     /**
@@ -119,7 +120,8 @@ public class DriveTrain extends Subsystem {
      * @return right wheel distance, inches
      */
     public double getRightEncPosition(){
-    	return Math.abs(rightEncoder.getPosition())/136*100000;
+//    	return (rightEncoder.getPosition())/136*100000;
+    	return rightEncoder.getPosition();
     }
     
     public void toggleGear()
