@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveEncoder extends Command {
 
-	private static final double ERROR_SCALING_CONSTANT = 0.5;
+	private static final double ERROR_SCALING_CONSTANT = 1.5;
 	
 	Timer t = new Timer();
 	private boolean using_timeout = false;
@@ -71,9 +71,9 @@ public class DriveEncoder extends Command {
     	double delta = rightDistance - leftDistance;
     	SmartDashboard.putNumber("Encoder Delta", delta);
     	if(isDrivingBackwards == false)
-    		Robot.drivetrain.tankdrive_raw(targetSpeed-delta*ERROR_SCALING_CONSTANT, targetSpeed+delta*ERROR_SCALING_CONSTANT);
+    		Robot.drivetrain.tankdrive_raw(-targetSpeed-delta*ERROR_SCALING_CONSTANT, targetSpeed+delta*ERROR_SCALING_CONSTANT);
     	else
-    		Robot.drivetrain.tankdrive_raw(-targetSpeed-delta*ERROR_SCALING_CONSTANT, -targetSpeed+delta*ERROR_SCALING_CONSTANT);
+    		Robot.drivetrain.tankdrive_raw(targetSpeed-delta*ERROR_SCALING_CONSTANT, -targetSpeed+delta*ERROR_SCALING_CONSTANT);
 	}
 
     // Make this return true when this Command no longer needs to run execute()
