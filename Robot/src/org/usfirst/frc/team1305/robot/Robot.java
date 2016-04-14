@@ -21,7 +21,6 @@ import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupPortculis;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupRotateClockwise;
 import org.usfirst.frc.team1305.robot.commands.AutoNothing;
 import org.usfirst.frc.team1305.robot.commands.AutoPortCullis;
-import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
@@ -61,7 +60,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-		AutonomousCommand = new AutonomousStub();
         //driveController = oi.getDriveContoller();
         AutoChooser = new SendableChooser();
         AutoChooser.addObject("Do Nothing", new AutoNothing());

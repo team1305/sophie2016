@@ -42,7 +42,7 @@ public class Launcher extends Subsystem {
 	private CANTalon _fly_wheel_talon_right = new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_R);
 	private CANTalon _fly_wheel_talon_left= new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_L);
 	private Solenoid Intake_Slide = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_SLIDER);
-	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BREAKS);
+	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BRAKES);
 	private DigitalInput ballSensor = new DigitalInput(RobotMap.DIO_BALLSENSOR);
 	
 	double targetSpeed ;
