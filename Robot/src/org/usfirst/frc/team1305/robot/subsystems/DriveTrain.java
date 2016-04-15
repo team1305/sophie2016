@@ -3,7 +3,6 @@ package org.usfirst.frc.team1305.robot.subsystems;
 import org.usfirst.frc.team1305.robot.RobotMap;
 import org.usfirst.frc.team1305.robot.commands.Drive;
 
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -19,13 +18,13 @@ public class DriveTrain extends Subsystem {
 	
 	CANTalon ml1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L1);
 	CANTalon ml2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L2);
-	//CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3); //MTR3
+	CANTalon ml3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_L3); //MTR3
 	CANTalon mr1 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R1);
 	CANTalon mr2 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R2);
-	//CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3); //MTR3
+	CANTalon mr3 = new CANTalon(RobotMap.CAN_DEVICE_DRIVE_R3); //MTR3
 	
 	CANTalon leftEncoder = ml2;
-	CANTalon rightEncode = mr1;
+	CANTalon rightEncoder = mr1;
 	
 	private boolean armPerspective = false;
 	public 	boolean isLowGear = false;
@@ -53,7 +52,9 @@ public class DriveTrain extends Subsystem {
 	public int getBackwardsEncPosition;
 	
 	private RobotDrive drive1 = new RobotDrive(ml1, ml2, mr1, mr2);
-	//private RobotDrive drive1 = new RobotDrive(ml1, ml2, ml3, mr1, mr2, mr3); //MTR3
+	
+	
+	
 
     public void initDefaultCommand()
     {
@@ -64,7 +65,7 @@ public class DriveTrain extends Subsystem {
     public DriveTrain()
     {
     	leftEncoder.reverseSensor(false);
-    	rightEncode.reverseSensor(true);
+    	rightEncoder.reverseSensor(true);
     	
     	getPosition = mr1.getEncPosition();
     	getPivotPosition = mr1.getEncPosition();
@@ -97,8 +98,31 @@ public class DriveTrain extends Subsystem {
         mr1.setP(0.15);
         mr1.setI(0); 
         mr1.setD(0);
+        
+        mr3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        ml3.changeControlMode(CANTalon.TalonControlMode.Follower);
+        mr3.set(mr1.getDeviceID());
+        ml3.set(ml1.getDeviceID());
+
 
 	}
+    /**
+     * 
+     * @return left wheel distance, inches
+     */
+    public double getLeftEncPosition(){
+//    	return (leftEncoder.getPosition())/136*100000;
+    	return leftEncoder.getPosition();
+    }
+    
+    /**
+     * 
+     * @return right wheel distance, inches
+     */
+    public double getRightEncPosition(){
+//    	return (rightEncoder.getPosition())/136*100000;
+    	return rightEncoder.getPosition();
+    }
     
     public void toggleGear()
     {
@@ -183,6 +207,20 @@ public class DriveTrain extends Subsystem {
     	{
         	drive1.tankDrive(leftValue/1.3, rightValue/1.3);
     	}
+    }
+    public void tankdrive_raw(double left, double right){
+
+    	if (mr1.getControlMode() != TalonControlMode.PercentVbus){
+    		ml2.changeControlMode(TalonControlMode.PercentVbus);
+        	mr1.changeControlMode(TalonControlMode.PercentVbus);
+        	mr2.changeControlMode(TalonControlMode.PercentVbus);
+            ml1.changeControlMode(TalonControlMode.PercentVbus);
+            //ml3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
+            //mr3.changeControlMode(TalonControlMode.PercentVbus); //MTR3
+    	}
+    	
+    	drive1.tankDrive(left,  right);
+        
     }
     private void setRampRate(double rampRate)
     {

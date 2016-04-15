@@ -22,12 +22,12 @@ public class Launcher extends Subsystem {
 	private boolean isLockedIn = false;
 	private boolean isBreakOn = false;
 	//private double lockSpeed = 0;
-	private double FLY_WHEEL_LOW_GOAL_SPEED = -1;
+	private double FLY_WHEEL_LOW_GOAL_SPEED = -0.5;
 	private double mtrspeed;
 	private Timer launchDelayTimer = new Timer();
 	private Timer retractIntakeTimer = new Timer();
 	private double LAUNCH_DELAY_SECONDS = 2.6;
-	private double intakeForwards = 1;
+	private double intakeForwards = 0.75; //forward intake speed
 	private double intakeBackwards = -1;
 	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
 	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
@@ -42,7 +42,7 @@ public class Launcher extends Subsystem {
 	private CANTalon _fly_wheel_talon_right = new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_R);
 	private CANTalon _fly_wheel_talon_left= new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_L);
 	private Solenoid Intake_Slide = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_SLIDER);
-	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BREAKS);
+	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BRAKES);
 	private DigitalInput ballSensor = new DigitalInput(RobotMap.DIO_BALLSENSOR);
 	
 	double targetSpeed ;

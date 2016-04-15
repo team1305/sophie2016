@@ -11,17 +11,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupChevelDeFrise;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupDriveBackwards;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardLong;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardLongWithEncoder;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardShort;
+import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardShortWithencoder;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupForwardSlowLong;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupHighGoal;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupLowGoal;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupPortculis;
 import org.usfirst.frc.team1305.robot.commands.AutoCMDGroupRotateClockwise;
 import org.usfirst.frc.team1305.robot.commands.AutoNothing;
-import org.usfirst.frc.team1305.robot.commands.AutonomousStub;
+import org.usfirst.frc.team1305.robot.commands.AutoPortCullis;
 import org.usfirst.frc.team1305.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1305.robot.subsystems.Launcher;
 import org.usfirst.frc.team1305.robot.subsystems.TheArm;
+import org.usfirst.frc.team1305.robot.subsystems.Brakes;
 import org.usfirst.frc.team1305.robot.subsystems.Camera;
 import org.usfirst.frc.team1305.robot.subsystems.Climber;
 
@@ -45,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static final Camera camera = new Camera();
 	public static final TheArm arm = new TheArm();
 	public static final Climber climber = new Climber();
+	public static final Brakes brakes = new Brakes();
 	
     //Command autonomousCommand;
 
@@ -56,30 +60,36 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-		AutonomousCommand = new AutonomousStub();
         //driveController = oi.getDriveContoller();
         AutoChooser = new SendableChooser();
-        AutoChooser.addDefault("Do Nothing", new AutoNothing());
+        AutoChooser.addObject("Do Nothing", new AutoNothing());
         AutoChooser.addObject("High Goal 'Steph Cury'", new AutoCMDGroupHighGoal());
         AutoChooser.addObject("Low Goal", new AutoCMDGroupLowGoal());
         AutoChooser.addObject("Forward Short (Slow)", new AutoCMDGroupForwardShort());
-        AutoChooser.addObject("Forward Long (Slow)", new AutoCMDGroupForwardSlowLong());
+        AutoChooser.addDefault("Forward Long (Slow)", new AutoCMDGroupForwardSlowLong()); // default auto
         AutoChooser.addObject("Forward Long (Fast)", new AutoCMDGroupForwardLong());
         AutoChooser.addObject("Chevel de Frise", new AutoCMDGroupChevelDeFrise());
         AutoChooser.addObject("Portculis", new AutoCMDGroupPortculis());
         AutoChooser.addObject("Rotate Clockwise", new AutoCMDGroupRotateClockwise());
         AutoChooser.addObject("Drive Backwards", new AutoCMDGroupDriveBackwards());
+        AutoChooser.addObject("PortCullis drive", new AutoPortCullis());
+        AutoChooser.addObject("fast long with encoders!", new AutoCMDGroupForwardLongWithEncoder());
+        AutoChooser.addObject("slow short with encoders!", new AutoCMDGroupForwardShortWithencoder());
         SmartDashboard.putData("Auto Mode:", AutoChooser);
     }
 	
 	public void disabledPeriodic() {
+		AutonomousCommand = (Command) AutoChooser.getSelected();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	if (AutonomousCommand != null) {
     	AutonomousCommand = (Command) AutoChooser.getSelected();
+    	if (AutonomousCommand != null) {
     	AutonomousCommand.start();
+    	}else{
+    		AutonomousCommand = new AutoCMDGroupForwardLong();
+    		AutonomousCommand.start();
     	}
     	//ks 2016-03-06 trialAutonomousCommand.start();
     }
