@@ -5,16 +5,22 @@ import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+
 //import org.usfirst.frc.team1305.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1305.robot.commands.ToggleGear;
-import org.usfirst.frc.team1305.robot.commands.ToggleLauncherLockin;
-import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
-import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
-import org.usfirst.frc.team1305.robot.commands.ShootNow;
-import org.usfirst.frc.team1305.robot.commands.ToggleBreaks;
-import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
-import org.usfirst.frc.team1305.robot.commands.ExtendArm;
+
+
+
+import org.usfirst.frc.team1305.robot.commands.arm.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesDeploy;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesRetract;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesToggle;
+import org.usfirst.frc.team1305.robot.commands.drive.ToggleDriveSmoothing;
+import org.usfirst.frc.team1305.robot.commands.drive.ToggleGear;
+import org.usfirst.frc.team1305.robot.commands.launcher.ExtendIntake;
+import org.usfirst.frc.team1305.robot.commands.launcher.LaunchLowGoal;
+import org.usfirst.frc.team1305.robot.commands.launcher.ShootNow;
+import org.usfirst.frc.team1305.robot.commands.launcher.ToggleLauncherLockin;
 
 
 /**
@@ -68,13 +74,15 @@ public class OI {
 	//private final Button climberup = new JoystickButton(driveController, 1);
 	//private final Button climberdown = new JoystickButton(driveController, 4);
 	//private final Button tiltout = new JoystickButton(driveController, 2);
+	private final Button brakeDeploy = new JoystickButton(driveController, 1);
+	private final Button brakeRetract = new JoystickButton(driveController, 2);
+
 
 	
 	private final Button toggleLauncherLockin = new JoystickButton(ballController, 5);
 	private final Button launchLowGoal = new JoystickButton(ballController, 2);//7
 	private final Button extendIntake = new JoystickButton(ballController, 1);//8
 	private final Button shootNow = new JoystickButton(ballController,  6);
-	private final Button toggleBreaks = new JoystickButton(ballController, 7);
 	
 	
 	private final boolean invertDriveStick = false;
@@ -90,7 +98,10 @@ public class OI {
 			toggleGear.whenPressed(new ToggleGear());
 			toggleLauncherLockin.whenPressed(new ToggleLauncherLockin());
 			toggleDriveSmoothing.whenPressed(new ToggleDriveSmoothing());
-			toggleBreaks.whenPressed(new ToggleBreaks());
+			brakeDeploy.whenPressed(new BrakesDeploy());
+			brakeRetract.whenPressed(new BrakesRetract());
+			
+			
 			
 			launchLowGoal.whileHeld(new LaunchLowGoal());
 			extendIntake.whileHeld(new ExtendIntake());
