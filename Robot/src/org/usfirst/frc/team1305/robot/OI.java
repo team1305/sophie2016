@@ -5,18 +5,22 @@ import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+
 //import org.usfirst.frc.team1305.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1305.robot.commands.ToggleGear;
-import org.usfirst.frc.team1305.robot.commands.ToggleLauncherLockin;
-import org.usfirst.frc.team1305.robot.commands.ToggleDriveSmoothing;
-import org.usfirst.frc.team1305.robot.commands.LaunchLowGoal;
-import org.usfirst.frc.team1305.robot.commands.ShootNow;
-import org.usfirst.frc.team1305.robot.commands.ExtendIntake;
-import org.usfirst.frc.team1305.robot.commands.BrakesDeploy;
-import org.usfirst.frc.team1305.robot.commands.BrakesRetract;
-import org.usfirst.frc.team1305.robot.commands.BrakesToggle;
-import org.usfirst.frc.team1305.robot.commands.ExtendArm;
+
+
+
+import org.usfirst.frc.team1305.robot.commands.arm.ExtendArm;
 //import org.usfirst.frc.team1305.robot.commands.toggleSlide;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesDeploy;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesRetract;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesToggle;
+import org.usfirst.frc.team1305.robot.commands.drive.ToggleDriveSmoothing;
+import org.usfirst.frc.team1305.robot.commands.drive.ToggleGear;
+import org.usfirst.frc.team1305.robot.commands.launcher.ExtendIntake;
+import org.usfirst.frc.team1305.robot.commands.launcher.LaunchLowGoal;
+import org.usfirst.frc.team1305.robot.commands.launcher.ShootNow;
+import org.usfirst.frc.team1305.robot.commands.launcher.ToggleLauncherLockin;
 
 
 /**

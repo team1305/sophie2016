@@ -2,7 +2,7 @@ package org.usfirst.frc.team1305.robot.subsystems;
 
 
 import org.usfirst.frc.team1305.robot.RobotMap;
-import org.usfirst.frc.team1305.robot.commands.LaunchHighGoal;
+import org.usfirst.frc.team1305.robot.commands.launcher.LaunchHighGoal;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,29 +20,27 @@ import edu.wpi.first.wpilibj.Timer;
 public class Launcher extends Subsystem {
 	
 	private boolean isLockedIn = false;
-	private boolean isBreakOn = false;
 	//private double lockSpeed = 0;
-	private double FLY_WHEEL_LOW_GOAL_SPEED = -0.5;
+	private final double FLY_WHEEL_LOW_GOAL_SPEED = -0.5;
 	private double mtrspeed;
 	private Timer launchDelayTimer = new Timer();
 	private Timer retractIntakeTimer = new Timer();
-	private double LAUNCH_DELAY_SECONDS = 2.6;
-	private double intakeForwards = 0.75; //forward intake speed
-	private double intakeBackwards = -1;
-	private double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
-	private double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
-	private double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
+	private final double LAUNCH_DELAY_SECONDS = 2.6;
+	private final double intakeForwards = 0.75; //forward intake speed
+	private final double intakeBackwards = -1;
+	private final double INTAKE_ROLLERS_CONTINUE_END_TIME = 0.2;
+	private final double INTAKE_ROLLERS_PAUSE_END_TIME = INTAKE_ROLLERS_CONTINUE_END_TIME + 0.5;
+	private final double INTAKE_ROLLERS_BACKUP_END_TIME = INTAKE_ROLLERS_PAUSE_END_TIME + 0.15;
 	private boolean isAutoLaunch = false;
 	private boolean isOnTarget = false;
 
-	private int MAX_LAUNCHER_RPM = 6200;
+	private final int MAX_LAUNCHER_RPM = 6200;
 	private double motorOutput; 
 	
 	private CANTalon Intake_Talon = new CANTalon(RobotMap.CAN_DEVICE_INTAKEROLLER);
 	private CANTalon _fly_wheel_talon_right = new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_R);
 	private CANTalon _fly_wheel_talon_left= new CANTalon(RobotMap.CAN_DEVICE_LAUNCHER_L);
 	private Solenoid Intake_Slide = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_SLIDER);
-	private Solenoid Launch_Breaks = new Solenoid(RobotMap.CAN_SOLENOID, RobotMap.SOLENOID_CH_BRAKES);
 	private DigitalInput ballSensor = new DigitalInput(RobotMap.DIO_BALLSENSOR);
 	
 	double targetSpeed ;
@@ -63,7 +61,7 @@ public class Launcher extends Subsystem {
 
         /* set the peak and nominal outputs, 12V means full */
         _fly_wheel_talon_right.configNominalOutputVoltage(+0.0f, -0.0f);
-        _fly_wheel_talon_right.configPeakOutputVoltage(+12.0f, -12.0f); //Launcher only positive spin 
+        _fly_wheel_talon_right.configPeakOutputVoltage(+12.0f, -12.0f); 
         /* set closed loop gains in slot0 */
         _fly_wheel_talon_right.setProfile(0);
         _fly_wheel_talon_right.setF(0.1097);//0.1097);
@@ -90,18 +88,6 @@ public class Launcher extends Subsystem {
      * Triggered through ToggleGear function,
      * values are held in tankDrive method.
      */
-
-    public void toggleBreaks()
-    {
-    	this.isBreakOn = ! this.isBreakOn;
-    }
-    
-    public void LaunchBreaks(){
-    	if(isBreakOn){
-    		Launch_Breaks.set(true);
-    		SmartDashboard.putBoolean("Launch Breaks On", isBreakOn);
-    	}
-    }
     
     public void toggleLockin(){
     	if (this.isLockedIn)
@@ -137,11 +123,7 @@ public class Launcher extends Subsystem {
     //	launchDelayTimer.reset();
     //}
     
-    /**
-     * Handles manual driving when smooth drive is not active.
-     * @param moveValue Y-value of joystick passed to method.
-     * @param rotateValue X-value of joystick passed to method.
-     */
+
     public void highGoal(double moveValue, double rotateValue){
     	//this is default command, so retract (depower) the slide in case Extend just ran...
     	Intake_Slide.set(false);
@@ -204,11 +186,6 @@ public class Launcher extends Subsystem {
 	    	if (isAutoLaunch && launchDelayTimer.get() > LAUNCH_DELAY_SECONDS) {
 	    		//feed the ball to the launcher flywheel
 	    		Intake_Talon.set(intakeForwards);
-	    		if (isBreakOn){
-	    			isBreakOn = false;
-	    			Launch_Breaks.set(false);
-	    			SmartDashboard.putBoolean("Launch Breaks On", isBreakOn);
-	    		}
 	    	}
     	}
     	

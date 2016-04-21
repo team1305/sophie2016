@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1305.robot.subsystems;
 
 import org.usfirst.frc.team1305.robot.RobotMap;
-import org.usfirst.frc.team1305.robot.commands.BrakesRetract;
+import org.usfirst.frc.team1305.robot.commands.brakes.BrakesRetract;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
